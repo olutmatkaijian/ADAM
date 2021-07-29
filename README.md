@@ -33,7 +33,7 @@ Original code will be uploaded to ADAM-Legacy branch once I have the time to rev
 - Make a usable, intuitive UI
 - Automatic registration of Raspberry Pi to main server when added to network and subsequent assortment of UUID (original used Unix Timestamp, but technically there might be issue if two raspberry pis were to try and acquire UUID at exactly the same time. Unlikely unless somebody tried to do such on purpose)
 - Main server infrastructure
-- Figure out how to do self-tuning PID using artificial intelligence in a way that allows for pre-emptive warning of possible equipment failure
+- Figure out how to do self-tuning PID using machine learning in a way that allows for pre-emptive warning of possible equipment failure
 - semi-automatic inventory system
 - Encrypted customer database and invoicing system
 - Granular Access control system (i.e. User 1 may be able to control brewing process but not see customer databse, while User 2 can see the customer database but not access the brewery system)
