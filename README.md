@@ -49,5 +49,33 @@ So far only Flask, HTML, CSS, Simple-PID and some libraries are used. Currently 
 My test setup is a modified jam preserver connected to a Raspberry Pi Zero W, using the ADS1115 and ZS-042 Realtime Clock, connected via GX16-8 plug. 
 This allows me to drive the heating element using solid-state relays. I do not recommend this setup, as it requires in-depth knowledge of high voltage electricity precautions.
 
+# Development Setup
+I use virtual environments in order to develop for ADAM:
+`python3 -m venv ADAM_VENV`
+`python3 -m venv STEVE_VENV`
+
+Using two different terminals for each software:
+`source ADAM_VENV/source/bin/activate`
+`source STEVE_VENT/source/bin/activate`
+
+Installing the required software in ADAM_VENV:
+`pip install --upgrade pip wheel`
+`pip install -r requirements.txt`
+
+Please consider that this software is an active development and the requirements may therefor be outdated or subject to change. This applies to both the ADAM mainframe and the STEVE server.
+
+Gevent, Gevent-Websocket and Gunicorn should already exist in the virtual environment after requirments are installed.
+To start the ADAM mainframe:
+`gunicorn -k gevent -w 1 -b :5000 adam_v2:app --certfile=testcert.crt --keyfile=testcert.key`
+
+Installing the required software in STEVE_VENV:
+`pip install --upgrade pip wheel`
+`pip install -r requirements.txt`
+
+Running the STEVE client:
+`python3 steve.py`
+
+Please note that KeyboardInterrupt in STEVE client is buggy and it does not behave always as expected. I recommend using htop (F3->steve.py->F9->F9->Enter) in order to terminate STEVE client when necessary.
+
 # Boring License stuff
 So far I have chosen no license, and therefor the IP rights remain by me. Do ask if you're interested in using or developing this system.
