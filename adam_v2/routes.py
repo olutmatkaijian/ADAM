@@ -1,8 +1,5 @@
-7
 from adam_v2 import app, socketio
 from flask import render_template
-# For asynchronious handling of the data collection process
-import asyncio
 
 
 @app.route('/index')
@@ -40,16 +37,13 @@ def process_status():
 def hardware_setup():
     return render_template("base.html", title="hardware setup")
 
-    
-# When a new device wants to be added, check its pre-shared key against the ADAM PSK
-@socketio.on("OBTAIN_UUID", namespace="/Register_Device")
-def register_device(data):
-    print("Recieved Data: ", data)
+# I can't for the love of it figure out how this is supposed to work
+@app.route("/register_device")
+def register_device():
+    return render_template("register_device.html", title="Register Device")
 
-# See if there were any errors in Register Device
-@socketio.on_error(namespace="/Register_Device")
-def register_device_error(e):
-    print("An error has occured while registering the device: " + str(e))
+
+
 
 #TODO: 
 # - Inventory system with QR-Code

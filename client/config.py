@@ -1,4 +1,4 @@
-MAINFRAME_URL = "https://127.0.0.1"
+MAINFRAME_URL = "https://0.0.0.0"
 MAINFRAME_PORT= 5000
 DEVICE_UUID = 0
 DEVICE_NAME = "unregistered"

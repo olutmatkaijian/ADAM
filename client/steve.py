@@ -1,86 +1,57 @@
-# Libraries for GPIO hardware to work
-import time
-#import RPi.GPIO as GPIO
-#import adafruit_ds3231
-#import board
-#import busio
-#from adafruit_ads1x15 import ads1015 as ADS
-#from adafruit_ads1x15.analog_in import AnalogIn
-from simple_pid import PID
-from operator import itemgetter
-import os
-import sys
-# Client behavior:
-# 1. Register to the server as configured in config.py
+from config import ADAM_PSK, MAINFRAME_URL, MAINFRAME_PORT, DEVICE_UUID, DEVICE_NAME, IS_PRODUCTION
 
-# Libraries for async http stuff
-import requests
-from config import MAINFRAME_URL, DEVICE_UUID, MAINFRAME_PORT, ADAM_PSK, IS_PRODUCTION
-# To connect to the flask server
 import socketio
 import asyncio
-# Device with UUID means that the device is not registered to a server
+import sys
+import os
+import time
+from socketio import Namespace
 
-# Using AsyncIO should allow for the collection of data while also doing other things
-if IS_PRODUCTION is False:
-    sio = socketio.AsyncClient()
-else:
-    sio = socketio.AsyncClient(logger=True, engineio_logger=True, ssl_verify=False)
-@sio.on('connect', namespace="Register_Device")
+
+
+# Testing wrong PSK
+ADAM_PSK = "Wrong_PSK"
+sio = socketio.AsyncClient(logger=True, engineio_logger=True, ssl_verify=False)
+
+@sio.on('connect', namespace='/register_device')
 async def on_connect():
-    print("Connecting ...")
+    await sio.send(f"\n Client {sio.sid} connected\n", namespace="/register_device")
 
-@sio.on('disconnect', namespace='Register_Device')
-def on_disconnect():
-    print("Disconnected")
-
-@sio.event
-async def get_message(data):
-    print(data)
-
-@sio.event
-async def connect_error(data):
-    print("Connection Failed due to: " + data)
-
-async def mainframe_connect(hostname, port, namespaces):
-    try: 
-        await sio.connect(str(hostname) + ":" + str(port), namespaces=namespaces)
-        print("Acquired SID: " + sio.sid)
-    except socketio.exceptions.ConnectionError as err:
-        print("Error establishing connection to server: %s", err)
-
-async def register_device():
-    try:
-        await sio.emit("OBTAIN_UUID", {"ADAM_PSK":str(ADAM_PSK)}, namespace="/Register_Device")
-    except:
-        print("Error @ OBTAIN_UUID")
+@sio.on("RECV UUID", namespace='/register_device')
+async def recv_ack_msg(msg):
+    print(msg)
 
 
-# In non-production environment, SSL issues do not yet arise
 
-async def main():    
+async def main():
+    # Initialize the client
     is_running = True
-    is_production = False
-    while is_running == True and is_production == False:
-        try:
-            # Check if connection already exists
-            if not sio.connected:
-                await mainframe_connect(MAINFRAME_URL, MAINFRAME_PORT, namespaces="/Register_Device")
-                    # If the device has a UUID, it starts sending information to ADAM
-                    # If it does not, it registers to ADAM using the PSK
-            if DEVICE_UUID == 0:
-                await register_device()    
-        except KeyboardInterrupt:
-            print("Interrupted")
-            is_running = False
-            try: 
-                print("Trying system exit...")
-                sys.exit(0)
-            except SystemExit:
-                print("Trying os exit")
-                os._exit(0)
-        time.sleep(10)
 
+    try:
+        sio.register_namespace(RegistrationNamespace('/register_device'))
+    except:
+        print("ERROR: Could not register namespace /register_device")
+    while is_running is True: 
+        try:
+            if not sio.connected:
+                try: 
+                    print("Connecting to: "+str(MAINFRAME_URL+":"+str(MAINFRAME_PORT)))
+                    await sio.connect(MAINFRAME_URL+":"+str(MAINFRAME_PORT), namespaces=['/register_device'])
+                except socketio.exceptions.ConnectionError as err:
+                    print("ERROR: " + str(err))
+
+                # Tester function
+            try:
+                await sio.emit('register_device_uuid', {"PSK":str(ADAM_PSK)}, namespace='/register_device')
+            except:
+                    print("TEST FALIED")
+            
+            is_running = False
+            await sio.wait()
+            await sio.disconnect()
+            
+        except KeyboardInterrupt:
+            sys.exit(0)
 
 if __name__=="__main__":
     asyncio.run(main())

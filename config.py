@@ -1,7 +1,6 @@
 import os
 
-
-PRESHARED_KEY = "dev1234"
+ADAM_PSK = "dev1234"
 
 
 class Config(object):
