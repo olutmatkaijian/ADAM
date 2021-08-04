@@ -1,8 +1,9 @@
-from adam_v2 import app
+7
+from adam_v2 import app, socketio
 from flask import render_template
-
 # For asynchronious handling of the data collection process
 import asyncio
+
 
 @app.route('/index')
 @app.route('/')
@@ -12,47 +13,44 @@ def index():
 
 
 # Database viewer to see database scheme for debug purposes
-@app.route('database_viewer')
+@app.route('/database_viewer')
 def database_viewer():
     return render_template("base.html", title="DB Viewer")
 
 # About page
-@app.route('about')
+@app.route('/about')
 def about():
     return render_template("base.html", title="About ADAM")
 
 # Process Designer
 # This is where for example, "PID CONTROLLER 1 SET TEMPERATURE 40" is done
-@app.route('process_designer')
+@app.route('/process_designer')
 def process_designer():
     return render_template("base.html", title="Process Designer")
 
 # Process Status
 # This is where you can see the ongoing process
-@app.route('process_status')
+@app.route('/process_status')
 def process_status():
     return render_template("base.html", title="Process Status")
 
 # Hardware Setup
 # This is where you can set up new hardware
-@app.route("hardware_setup")
+@app.route("/hardware_setup")
+def hardware_setup():
     return render_template("base.html", title="hardware setup")
 
-
-# Helper function, acquires data from a socket and inserts it into the database
-async def async_get_process_data():
-    await asyncio.sleep(1)
-    return 'Done!'
-
     
-# This endpoint is used to asynchroniously collect data sent from the client device
-@app.route("process_endpoint")
-def process_endpoint():
-    return render_template("base.html", title="process endpoint")
+# When a new device wants to be added, check its pre-shared key against the ADAM PSK
+@socketio.on("OBTAIN_UUID", namespace="/Register_Device")
+def register_device(data):
+    print("Recieved Data: ", data)
 
-@app.route("register_device")
-def register_device():
-    return render_template("base.html", title="register device")
+# See if there were any errors in Register Device
+@socketio.on_error(namespace="/Register_Device")
+def register_device_error(e):
+    print("An error has occured while registering the device: " + str(e))
+
 #TODO: 
 # - Inventory system with QR-Code
 # - Customer order system

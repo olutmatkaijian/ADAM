@@ -1,0 +1,4 @@
+__pycache__/
+adam_v2/__pycache__
+adam_v2/test.db
+client/__pycache__
