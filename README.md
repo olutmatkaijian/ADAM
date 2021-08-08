@@ -1,3 +1,9 @@
+### WORK IN PROGRESS ! ###
+Todo: 
+- Fix Database Relationships
+- Insert device UUID into database upon comissioning
+
+
 # Introduction
 
 ADAM is short for Automated Data Acquisition and Management. It aims to be a SCADA (Supervisory Control and Data Acquisition) type system for Single-Board Computers like the Raspberry Pi Zero W. 
