@@ -1,6 +1,9 @@
 from adam_v2 import app, socketio
 from flask import render_template
+from config import ADAM_PSK
 
+# Create random UUID
+from uuid import uuid4
 
 @app.route('/index')
 @app.route('/')
@@ -37,7 +40,7 @@ def process_status():
 def hardware_setup():
     return render_template("base.html", title="hardware setup")
 
-# I can't for the love of it figure out how this is supposed to work
+# This now works - kind of 
 @app.route("/register_device")
 def register_device():
     return render_template("register_device.html", title="Register Device")
