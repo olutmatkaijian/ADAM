@@ -1,0 +1,15 @@
+<!doctype html>
+
+{% extends "base.html" %}
+
+{% block content %}
+    <p>Username: {{current_user.username}}</p>
+    <p>Permissions: |{% for i in rlist %} {{i}} | {% endfor %}</p>
+    <p>Last password change: {{current_user.last_pw_change.strftime("%d.%m.%Y %H:%M:%S")}}</p>
+    <p>Created: {{current_user.created.strftime("%d.%m.%Y %H:%M:%S")}}</p>
+    <p>Expires: {% if current_user.expire_date %} {{current_user.expire_date.strftime("%d.%m.%Y %H:%M:%S")}}
+        {% else %} Never {% endif %}</p>
+    <p><a href="{{url_for('change_password')}}">Change Password</a></p>
+{% endblock %}
+
+

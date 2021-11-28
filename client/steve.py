@@ -85,6 +85,7 @@ async def keep_alive():
     return "Keep_Alive loop stopped"
 # This function is called when DEVICE_UUID is 0
 
+#TODO: ADD HEARTBEAT
 async def device_registration():
     try:
         sio.register_namespace(RegistrationNamespace('/register_device'))
@@ -104,8 +105,8 @@ async def device_registration():
             # From here on, the above defined "UUID_REGISTER_SUCCESS" event takes over           
         except:
             print("[ERROR] : Emission of register_device_uuid failed!")
-	
-	# After the UUID has been acquired, disconnect from the namespace
+    
+    # After the UUID has been acquired, disconnect from the namespace
     try:
         await sio.emit('disconnect', namespace='/register_device')
         print("[STATUS] : Disconnected from namespace \'register_device\'")
@@ -126,7 +127,7 @@ async def main():
     # of a number, meaning that the client must pretend it's a string as well
     # I do not see where this could ever go wrong ... /sarcasm
     
-    if DEVICE_UUID == str(0):
+    if DEVICE_UUID == str(0) or DEVICE_UUID==0:
         print("[STATUS] : Attempting device registration because DEVICE_UUID="+DEVICE_UUID)
         try:
             await device_registration()

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %} {{title}} {% endblock %}
+
+{% block content %}
+
+<h1>Create new User</h1>
+<form action="" method="post">
+{{ adduserform.hidden_tag() }}
+<p>{{adduserform.username.label}}<br>
+{{adduserform.username(size=32)}}</p>
+<p>{{adduserform.groups.label}}<br>
+{{adduserform.groups}}<br></p>
+<p>{{adduserform.expires.label}}<br>
+{{adduserform.expires}}</p>
+<p>{{adduserform.submit.label}}<br>
+{{adduserform.submit()}}</p>
+</p>
+</form>
+{% endblock %}

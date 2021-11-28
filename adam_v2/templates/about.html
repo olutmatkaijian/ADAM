@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{title}}</h1>
+
+<p>ADAM stands for "Automated Data Aquisition and Management". It is 
+currently no more than vision of making and easily available SCADA
+system integrated with a sales/inventory system to run small to 
+medium scale enterprises - the main focus here were breweries, but
+due to it's generalized nature, everything else that can be automated
+with GPIO pins is also possible.</p>
+<br>
+<h2>Why GPIO and not SPI/I2C/Other drivers?</h2>
+It was the easiest for me and my current setup to create a system based
+around GPIO. SPI and I2C require additional reading, and additional
+reading hurts my 500IQ smooth brain.
+<br>
+<h2>What is up with the database viewer?</h2>
+I thought it was a neat feature to visualize the database and it's 
+relations, and it helps with development. I use schemacrawler to 
+generate an image of the database schema.
+In order for it to work, the computer running ADAM must have JAVA and 
+GraphViz installed - see <a href=https://www.schemacrawler.com/diagramming.html>schemacrawler homepage</a>
+for more information.
+Each time the Database Viewer is opened, the files are generated new. 
+It is recommended not to open it up too often!
+<br>
+<h2>Why JavaScript though? </h2>
+Because we live in a bleak dystopia and JavaScript - as sad as it is -
+is absolutely necessary to make the animations and the "Drag and Drop"
+style Process Editor as well as the Process Status views. 
+
+{% endblock %}

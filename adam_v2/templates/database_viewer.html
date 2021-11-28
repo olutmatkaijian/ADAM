@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Database Viewer</h1>
+
+<img src="{{url_for('static',filename='main.png')}}"></img>
+
+<h2> Users Schema </h2>
+
+<img src="{{url_for('static',filename='users.png')}}"></img>
+
+<h2> Devices Schema </h2>
+
+<img src="{{url_for('static',filename='devices.png')}}"></img>
+
+<h2> Customers Schema</h2>
+
+<img src="{{url_for('static',filename='customers.png')}}"></img>
+
+<form action="" method="post">
+<p>{{refreshform.refreshfield.label}}<br>
+{{refreshform.refreshfield()}}</p>
+
+</form>
+{% endblock %}

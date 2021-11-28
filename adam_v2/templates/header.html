@@ -1,0 +1,13 @@
+<header>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico')}}">
+    <title>ADAM - {{title}}</title>
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<ul>
+{% for message in messages %}
+    <li>{{message}}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% endwith %}
+</header>

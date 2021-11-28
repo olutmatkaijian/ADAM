@@ -37,8 +37,11 @@ class PID_Controller(db.Model):
     # Name of PID_Controller (i.e. "Water Pump 1")
     name = db.Column(db.String(128), nullable=False)
 
+    # UUID
+    device_uuid = db.Column(db.String(36))
+
     # GPIO hardware of the PID_Controller
-    gpio_hw = db.relationship('GPIO_Hardware')
+    # gpio_hw = db.relationship(db.Integer(), db.ForeignKey('gpio_hardware.id'))
 
 # This class is only for a single GPIO Pin. The GPIO Pin can either be used or
 # unused, and it can be online or offline.
@@ -55,7 +58,7 @@ class GPIO_Pin(db.Model):
     used = db.Column(db.Boolean(False))
 
     # Assign this Pin to a group of GPIO Pins from a PID_Controller
-    gpio_hw_id = db.Column(db.Integer, db.ForeignKey('gpio_hardware.id'))
+    #gpio_hw_id = db.Column(db.Integer, db.ForeignKey('GPIO_Hardware.id'))
 
 # This class defines GPIO Hardware, which has a name and an id.
 class GPIO_Hardware(db.Model):
