@@ -181,6 +181,12 @@ def user_profile():
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+
+@app.route("/inv_qr_scanner")
+@login_required
+def inventory_qr_scanner():
+    return render_template("inventory_qr_scanner.html", title="QrCode Scanner")
+    
 # To logout
 @app.route("/logout")
 @login_required
