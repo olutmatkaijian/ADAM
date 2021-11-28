@@ -1,4 +1,6 @@
 __pycache__/
 adam_v2/__pycache__
-adam_v2/test.db
+adam_v2/*.db
 client/__pycache__
+migrations
+schemacrawler/

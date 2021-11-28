@@ -1,4 +1,0 @@
-aiohttp
-requests
-RPi.GPIO
-adafruit-circuitpython-ads1x15

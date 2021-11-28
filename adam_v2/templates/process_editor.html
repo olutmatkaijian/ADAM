@@ -1,9 +1,16 @@
 {% extends "base.html" %}
 
-<link rel="stylesheet" href="{{ url_for('static', filename='toolbar.css')}}">
-{% block content %}
 
-<h1>Process editor</h1>
-<div class="toolbar_main">
-TEST</div>
+
+{% block content %}
+<h1>Process Editor</h1>
+I am currently working on this part of they project. The idea is as 
+follows:
+
+<ul>
+<li>Let the user upload SVG files for the SCADA interface</li>
+<li>Let the user upload text files describing the inteface variables 
+in a pythonic way</li>
+<li>The user then sees the uploaded SVG and can assign a text files to it</li>
+<li>Now the user can drag the SVG into the process editor</li></ul>
 {% endblock %}
