@@ -89,5 +89,6 @@ timeout 4h gunicorn -k gevent -w 1 -b :5000 adam_v2:app --certfile=testing.crt -
 - [Drawflow](https://github.com/jerosoler/Drawflow) For the Drag-And-Drop Process Editor interface
 - [SchemaCrawler](https://www.schemacrawler.com/) For the Database Viewer (to make development easier)
 - [nimiq lightweight qr code readr](https://github.com/nimiq/qr-scanner) for scanning qr code
+- [Red October](https://www.neogrey.com/portfolio/red-october/) font for the top navigation bar 
 
 Probably quite a few others I have forgotten to add. If you're not listed, well, I'm sorry. 
