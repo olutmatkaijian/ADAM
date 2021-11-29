@@ -1,7 +1,0 @@
-digraph ADAM_Backend {
-    Flask->WebAPI;
-}
-
-digraph ADAM_Frontend {
-    VueJS->WebAPI->Flask;
-}
