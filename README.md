@@ -2,6 +2,23 @@
 
 ** This is a work in progress! It is not functional (yet)! **
 
+# Recent Changes
+- Now with CheatSheet in the Process Editor that Shows/Hides Cheat Sheet
+on click
+
+# Currently working on
+- SVG(s) for the Editor
+- Grouped Tiles in the left Column
+- Hardware Setup Page
+- Write Hardware to Database from Hardware Setup Page, allow for SVG upload
+- Pull Hardware from Database -> Grouped Tiles
+
+# Would be nice to have
+- Grid Snapping in the Editor
+- Better Grid in the Editor (big and small squares)
+- Autorouting or at least a more rigid way of creating the connections
+- Different connection types: "Pipe", "Electrical Wire", etc.
+- Input/Output Pins in different locations (might already be possible)
 
 # Introduction
 

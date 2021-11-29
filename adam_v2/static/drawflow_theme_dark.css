@@ -278,6 +278,8 @@
 
 
 
+
+
 .drag-drawflow {
   line-height: 50px;
   border-bottom: 1px solid var(--border-color);
@@ -360,3 +362,31 @@
   background-color: darkorange; 
 }
 
+.btn-hide-cheat {
+  position: absolute;
+  top: 10px;
+  margin-left: 50%;
+  margin-right: 50%;
+  color: black;
+  background-color: darkorange;
+  font-weight: bold;
+  border: 1px solid #0e5ba3;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 4;
+  text-align: center;
+  width: 146px;
+  height: 16.5px;
+  font-family: "Red October";
+  text-align: center;
+  display: flex;
+}
+
+.cs_shown {
+    width: 146px;
+}
+
+.cs_hidden {
+    width: 146px;
+}

@@ -25,12 +25,16 @@
 
         <div class="btn-export" onclick="console.log(editor.export())">Export</div>
         <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
+        <div class="btn-hide-cheat">
+            <div   class="cs_shown" onclick="hideCheat('show')" id="cs_shown">CHEATSHEET</div>
+            <div   class="cs_hidden" onclick="hideCheat('hide')" id="cs_hidden" style="display:none" >HIDE</div>
+        </div>
         <div class="btn-lock">
           <img id="lock" class="procedit_locked" onclick="editor.editor_mode='fixed'; changeMode('lock');"  src="{{url_for('static', filename='unlocked-svgrepo-com.svg')}}"/>
           <img id="unlock" class="procedit_unlocked" onclick="editor.editor_mode='edit'; changeMode('unlock');" style="display:none;" src="{{url_for('static', filename='locked-svgrepo-com.svg')}}"/>
         </div>
         
-        <div class="Help">Cheatsheet:
+        <div class="Help" id="cheat" style="display:none">Cheatsheet:
             <ul>
                 <li>Press Delete to remove node</li>
                 <li>Pull from left column to editor to create node</li>
@@ -38,6 +42,7 @@
                 <li>Export exports to JSON</li>
                 <li>Inputs are left</li>
                 <li>Outputs are right</li>
+                <li>Double-click to add new routing point (buggy)</li>
             </ul>
         </div>
         <div class="bar-zoom">
@@ -53,9 +58,10 @@
     // Shamelessly stolen
     var id = document.getElementById("drawflow");
     const editor = new Drawflow(id);
-    editor.reroute = true;
+    editor.reroute = false;
+    editor.curvature = 0;
     editor.reroute_fix_curvature = false;
-    editor.force_first_input = false;
+    editor.force_first_input = true;
 
   /*
     editor.createCurvature = function(start_pos_x, start_pos_y, end_pos_x, end_pos_y, curvature_value, type) {
@@ -162,7 +168,23 @@
         unlock.style.display = 'none';
       }
   }
-
+  
+  function hideCheat(option) {
+    if(option=='hide'){
+        cs_shown.style.display="block";
+        cs_hidden.style.display="none";
+        cheat.style.display="none";
+        
+    }
+    else {
+        cs_shown.style.display="none";
+        cs_hidden.style.display="block";
+        cheat.style.display="block";
+    }
+    
+    }
+    
+    
     function drop(ev) {
       if (ev.type === "touchend") {
         var parentdrawflow = document.elementFromPoint( mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
