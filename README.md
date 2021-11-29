@@ -19,10 +19,11 @@ on click
 - Autorouting or at least a more rigid way of creating the connections
 - Different connection types: "Pipe", "Electrical Wire", etc.
 - Input/Output Pins in different locations (might already be possible)
+- Generate Node items purely through Jinja2 templates
 
 # Introduction
 
-ADAM is short for "Automated Data Acquisition and Management". This software aims to be a suite for acquiring and managing data (duh) in process control. 
+ADAM is short for "Automated Data Acquisition and Management". This software aims to be a suite for acempquiring and managing data (duh) in process control. 
 It therefor will have a SCADA-esque interface. Users will be able to define Processes and Recipes. They will also be able to manage Inventory, Sales, Customers and Deliveries. 
 
 In order to interface with real hardware and control processes, another piece of software called STEVE is included. STEVE can control each GPIO pin of a given SoC (like a Raspberry Pi) independently. 
