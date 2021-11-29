@@ -1,6 +1,10 @@
 ### Work in Progress!
 
-** This is a work in progress! It is not functional (yet)! **
+
+
+![current_progress](documents/ADAM_UI_CHEATSHEET.png)
+**Current progress picture**
+**This is a work in progress! It is not functional (yet)!**
 
 # Recent Changes
 - Now with CheatSheet in the Process Editor that Shows/Hides Cheat Sheet
