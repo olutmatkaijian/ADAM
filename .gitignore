@@ -4,3 +4,4 @@ adam_v2/*.db
 client/__pycache__
 migrations
 schemacrawler/
+README.md
