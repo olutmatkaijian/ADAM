@@ -3,14 +3,211 @@
 
 
 {% block content %}
-<h1>Process Editor</h1>
-I am currently working on this part of they project. The idea is as 
-follows:
+<script src="{{url_for('static', filename='drawflow.min.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static', filename='drawflow_theme_dark.css')}}" />
+<link rel="stylesheet" href="{{url_for('static', filename='process_editor.css')}}" />
+<link rel="stylesheet" href="{{url_for('static', filename='drawflow.min.css')}}") />
 
-<ul>
-<li>Let the user upload SVG files for the SCADA interface</li>
-<li>Let the user upload text files describing the inteface variables 
-in a pythonic way</li>
-<li>The user then sees the uploaded SVG and can assign a text files to it</li>
-<li>Now the user can drag the SVG into the process editor</li></ul>
+<div id="body">
+  <div class="wrapper">
+    <div class="col">
+      <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="heated_vessel">
+        <i class="fab pc-heated_vessel"></i><span> Heated Vessel</span>
+      </div>
+      <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dumb_pump">
+        <i class="fab pc-dumb_pump"></i><span> Pump </span>
+      </div>
+      
+    </div>
+    <div class="col-right">
+    
+      <div id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
+
+        <div class="btn-export" onclick="console.log(editor.export())">Export</div>
+        <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
+        <div class="btn-lock">
+          <img id="lock" class="procedit_locked" onclick="editor.editor_mode='fixed'; changeMode('lock');"  src="{{url_for('static', filename='unlocked-svgrepo-com.svg')}}"/>
+          <img id="unlock" class="procedit_unlocked" onclick="editor.editor_mode='edit'; changeMode('unlock');" style="display:none;" src="{{url_for('static', filename='locked-svgrepo-com.svg')}}"/>
+        </div>
+        
+        <div class="Help">Cheatsheet:
+            <ul>
+                <li>Press Delete to remove node</li>
+                <li>Pull from left column to editor to create node</li>
+                <li>Clear removes everything</li>
+                <li>Export exports to JSON</li>
+                <li>Inputs are left</li>
+                <li>Outputs are right</li>
+            </ul>
+        </div>
+        <div class="bar-zoom">
+          <img class="procedit_zoomout" onclick="editor.zoom_out()" src="{{url_for('static', filename='zoom-out-svgrepo-com.svg')}}"/>
+          <img class="procedit_zoomreset" onclick="editor.zoom_reset()" src="{{url_for('static', filename='compass-svgrepo-com.svg')}}"/>
+          <img class="procedit_zoomin" onclick="editor.zoom_in()" src="{{url_for('static', filename='zoom-in-svgrepo-com.svg')}}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <script>
+    // Shamelessly stolen
+    var id = document.getElementById("drawflow");
+    const editor = new Drawflow(id);
+    editor.reroute = true;
+    editor.reroute_fix_curvature = false;
+    editor.force_first_input = false;
+
+  /*
+    editor.createCurvature = function(start_pos_x, start_pos_y, end_pos_x, end_pos_y, curvature_value, type) {
+      var center_x = ((end_pos_x - start_pos_x)/2)+start_pos_x;
+      return ' M ' + start_pos_x + ' ' + start_pos_y + ' L '+ center_x +' ' +  start_pos_y  + ' L ' + center_x + ' ' +  end_pos_y  + ' L ' + end_pos_x + ' ' + end_pos_y;
+    }*/
+
+
+
+    
+
+    editor.start();
+
+    // Events!
+    editor.on('nodeCreated', function(id) {
+      console.log("Node created " + id);
+    })
+
+    editor.on('nodeRemoved', function(id) {
+      console.log("Node removed " + id);
+    })
+
+    editor.on('nodeSelected', function(id) {
+      console.log("Node selected " + id);
+    })
+
+    editor.on('moduleCreated', function(name) {
+      console.log("Module Created " + name);
+    })
+
+    editor.on('moduleChanged', function(name) {
+      console.log("Module Changed " + name);
+    })
+
+    editor.on('connectionCreated', function(connection) {
+      console.log('Connection created');
+      console.log(connection);
+    })
+
+    editor.on('connectionRemoved', function(connection) {
+      console.log('Connection removed');
+      console.log(connection);
+    })
+/*
+    editor.on('mouseMove', function(position) {
+      console.log('Position mouse x:' + position.x + ' y:'+ position.y);
+    })
+*/
+    editor.on('nodeMoved', function(id) {
+      console.log("Node moved " + id);
+    })
+
+    editor.on('zoom', function(zoom) {
+      console.log('Zoom level ' + zoom);
+    })
+
+    editor.on('translate', function(position) {
+      console.log('Translate x:' + position.x + ' y:'+ position.y);
+    })
+
+    editor.on('addReroute', function(id) {
+      console.log("Reroute added " + id);
+    })
+
+    editor.on('removeReroute', function(id) {
+      console.log("Reroute removed " + id);
+    })
+    /* DRAG EVENT */
+
+    /* Mouse and Touch Actions */
+
+    var elements = document.getElementsByClassName('drag-drawflow');
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].addEventListener('touchend', drop, false);
+      elements[i].addEventListener('touchmove', positionMobile, false);
+      elements[i].addEventListener('touchstart', drag, false );
+    }
+
+    var mobile_item_selec = '';
+    var mobile_last_move = null;
+   function positionMobile(ev) {
+     mobile_last_move = ev;
+   }
+
+   function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drag(ev) {
+      if (ev.type === "touchstart") {
+        mobile_item_selec = ev.target.closest(".drag-drawflow").getAttribute('data-node');
+      } else {
+      ev.dataTransfer.setData("node", ev.target.getAttribute('data-node'));
+      }
+    }
+    function changeMode(option) {
+
+    //console.log(lock.id);
+      if(option == 'lock') {
+        lock.style.display = 'none';
+        unlock.style.display = 'block';
+      } else {
+        lock.style.display = 'block';
+        unlock.style.display = 'none';
+      }
+  }
+
+    function drop(ev) {
+      if (ev.type === "touchend") {
+        var parentdrawflow = document.elementFromPoint( mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
+        if(parentdrawflow != null) {
+          addNodeToDrawFlow(mobile_item_selec, mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY);
+        }
+        mobile_item_selec = '';
+      } else {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("node");
+        addNodeToDrawFlow(data, ev.clientX, ev.clientY);
+      }
+      
+          function addNodeToDrawFlow(name, pos_x, pos_y) {
+      if(editor.editor_mode === 'fixed') {
+        return false;
+      }
+      pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
+      pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
+
+
+
+      switch (name) {
+        case 'heated_vessel':
+        var heated_vessel = `
+        <div>
+          <div class="title-box"><i class="fab pc-heated_vessel"></i> Heated Vessel</div>
+        </div>
+        `;
+          editor.addNode('heated_vessel', 1,  2, pos_x, pos_y, 'heated_vessel', {}, heated_vessel );
+          break;
+        case 'dumb_pump':
+          var dumb_pump = `
+          <div>
+            <div class="title-box"><i class="fab pc-dumb_pump"></i> Dumb Pump</div>
+          </div>
+          `
+          editor.addNode('dumb_pump', 1, 1, pos_x, pos_y, 'dumb_pump', {}, dumb_pump );
+          break;
+
+//        default:
+      }
+    }
+
+    }
+        </script>
+</div>
 {% endblock %}

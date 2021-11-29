@@ -1,48 +1,48 @@
 <!doctype html>
 <link rel="stylesheet" href="{{ url_for('static', filename='styles.css')}}">
+<script src="{{url_for('static', filename='vue.min.js')}}"></script>
+
 
 <div class ="topnav">
         {% if current_user.permission_group and "PE" in current_user.permission_group %}
-        <a href="{{ url_for('process_editor')}}">Process Editor</a>
+        <a href="{{ url_for('process_editor')}}">PROCESS EDITOR</a>
         {% endif %}
         {% if current_user.permission_group and "PS" in current_user.permission_group %}
-        <a href="{{ url_for('process_status')}}">Process Status</a>
+        <a href="{{ url_for('process_status')}}">PROCESS STATUS</a>
         {% endif %}
         {% if current_user.permission_group and "DBV" in current_user.permission_group %}
-        <a href="{{ url_for('database_viewer')}}">Database Viewer</a>
+        <a href="{{ url_for('database_viewer')}}">DATABASE VIEWER</a>
         {% endif %}
         {% if current_user.permission_group and "INV" in current_user.permission_group %}
-        <a href="{{ url_for('inventory')}}">Inventory</a>
+        <a href="{{ url_for('inventory')}}">INVENTORY</a>
         {% endif %}
-        <a href="{{ url_for('about')}}">About</a>
+        <a href="{{ url_for('about')}}">ABOUT</a>
         {% if current_user.permission_group and "HWS" in current_user.permission_group %}
-        <a href="{{ url_for('hardware_setup')}}">Hardware Setup</a>
+        <a href="{{ url_for('hardware_setup')}}">HARDWARE SETUP</a>
         {% endif %}
         {% if current_user.permission_group and "SALE" in current_user.permission_group %}
-        <a href="{{ url_for('sales_management')}}">Sales</a>
+        <a href="{{ url_for('sales_management')}}">SALES</a>
         {% endif %}
         {% if current_user.permission_group and "DELI" in current_user.permission_group %}
-        <a href="{{ url_for('deliveries')}}">Deliveries</a>
+        <a href="{{ url_for('deliveries')}}">DELIVERY</a>
         {% endif %}
         {% if current_user.permission_group and "USRADM" in current_user.permission_group %}
-        <a href="{{ url_for('user_administration')}}">Users</a>
+        <a href="{{ url_for('user_administration')}}">USERS</a>
         {% endif %}
         
         {% if not current_user.is_authenticated %}
-            <a href="{{ url_for('ADAM_login')}}">Login</a>
+            <a href="{{ url_for('ADAM_login')}}">LOGIN</a>
         {% else %}
-            <a href="{{ url_for('user_profile')}}">Profile</a>
-            <a href="{{ url_for('logout')}}">Logout</a>
+            <a href="{{ url_for('user_profile')}}">PROFILE</a>
+            <a href="{{ url_for('logout')}}">LOGOUT</a>
         {% endif %}
 </div>
 
 <section class="header">
         {% include 'header.html' %}
 </section>
-        
-<section class="content">
 
-    {% block content %}
-    {{content}}
-    {% endblock %}
-</section>
+
+{% block content %}
+{{content}}
+{% endblock %}

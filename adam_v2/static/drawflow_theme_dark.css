@@ -104,9 +104,10 @@
   background: var(--dfBackgroundColor);
   background-size: var(--dfBackgroundSize) var(--dfBackgroundSize);
   background-image: var(--dfBackgroundImage);
-  height: 100vh;
+  height:  calc(100vh - 60px);
   overflow: hidden;
-  margin-top: 10px;
+  margin-top: 0.25em;
+  position: relative;
   }
 
 .drawflow .drawflow-node {
@@ -116,7 +117,7 @@
   border: var(--dfNodeBorderSize)  solid var(--dfNodeBorderColor);
   border-radius: var(--dfNodeBorderRadius);
   min-height: var(--dfNodeMinHeight);
-  width: auto;
+  width: 200px;
   min-width: var(--dfNodeMinWidth);
   padding-top: var(--dfNodePaddingTop);
   padding-bottom: var(--dfNodePaddingBottom);
@@ -226,3 +227,136 @@
   border: var(--dfDeleteHoverBorderSize) solid var(--dfDeleteHoverBorderColor);
   border-radius: var(--dfDeleteHoverBorderRadius);
 }
+
+.col {
+  overflow: auto;
+  width: 300px;
+  height: 100%;
+  border-right: 1px solid var(--border-color)
+}
+
+.col-right{
+  overflow: auto;
+  width: 100%;
+  margin-right: 1em;
+}
+
+.wrapper {
+  width: 100%;
+  height: calc(100vh-67px);
+  display: flex;
+}
+
+.drag-drawflow {
+  line-height: 50px;
+  border-bottom: 1px solid var(--border-color);
+  padding-left: 20px;
+  cursor: move;
+  user-select: none;
+}
+
+.btn-export {
+  float: right;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #0e5ba3;
+  background: #4ea9ff;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 5;
+  text-align: center;
+  width: 75px;
+  height: 16.5px;
+  font-family: "Red October";
+  text-align: center;
+}
+
+
+
+
+.drag-drawflow {
+  line-height: 50px;
+  border-bottom: 1px solid var(--border-color);
+  padding-left: 20px;
+  cursor: move;
+  user-select: none;
+}
+
+.Help{
+  top: 40px;
+  left: 10px;
+  width: fit-content;
+  height: fit-content;
+  position: relative;
+  border-color: orange;
+  border-style: solid;
+  font-family: "Noto Sans";
+  font-weight: bold;
+  background-color: black;
+  color: orange;
+}
+
+.bar-zoom {
+  float: right;
+  position: absolute;
+  bottom: 10px;
+  right: 0.5em;
+  font-size: 24px;
+  color: white;
+  padding: 5px 10px;
+  background: #555555;
+  border-radius: 4px;
+  border-right: 1px solid var(--border-color);
+  z-index: 5;
+  background-color: darkorange;
+  width: 40px;
+  cursor: pointer;
+}
+.bar-zoom svg {
+  cursor: pointer;
+  padding-left: 10px;
+}
+.bar-zoom svg:nth-child(1) {
+  padding-left: 0px;
+}
+
+.btn-clear {
+  width: 70px;
+  height: 16.5px;
+  text-align: center;
+  font-family: "Red October";
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  font-weight: bold;
+  border: 1px solid #96015b;
+  background: #e3195a;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 5;
+}
+
+.btn-lock {
+  float: right;
+  position: absolute;
+  bottom: 7em;
+  right: 0.5em;
+  display: flex;
+  font-size: 24px;
+  color: white;
+  padding: 5px 10px;
+  background: #555555;
+  border-radius: 4px;
+  border-right: 1px solid var(--border-color);
+  z-index: 5;
+  cursor: pointer;
+  width: 40px;
+  background-color: darkorange; 
+}
+

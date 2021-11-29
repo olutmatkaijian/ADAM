@@ -16,7 +16,10 @@ mirgate = Migrate(app, db)
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+"""! Initialize SocketIO 
 
+SocketIO is used to recieve data from the SoC hardware running STEVE 
+"""
 socketio = SocketIO(app, engineio_logger=True, logger=True, async_mode="threading")
 
 from adam_v2.models import users, PID_Control
