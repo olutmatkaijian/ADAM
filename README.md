@@ -70,6 +70,9 @@ So to run it for 4 hours:
 timeout 4h gunicorn -k gevent -w 1 -b :5000 adam_v2:app --certfile=testing.crt --keyfile=testing.key
 ```
 
+
+**NOTE ABOUT DATABASE VIEWER**: To use the Database Viewer, you must have [schemacrawler](https://www.schemacrawler.com/) installed in ADAM/schemacrawler directory.
+
 # Recent Changes
 - (Partially) Implemented the GUI for the Process Editor. 
 - Added nimiq QrCode Scanner for Inventory system (not attached to anything yet)
