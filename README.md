@@ -1,62 +1,37 @@
-### WORK IN PROGRESS ! ###
-Todo: 
-- Fix Database Relationships
-- Insert device UUID into database upon comissioning
+### Work in Progress!
+
+** This is a work in progress! It is not functional (yet)! **
 
 
 # Introduction
 
-ADAM is short for Automated Data Acquisition and Management. It aims to be a SCADA (Supervisory Control and Data Acquisition) type system for Single-Board Computers like the Raspberry Pi Zero W. 
+ADAM is short for "Automated Data Acquisition and Management". This software aims to be a suite for acquiring and managing data (duh) in process control. 
+It therefor will have a SCADA-esque interface. Users will be able to define Processes and Recipes. They will also be able to manage Inventory, Sales, Customers and Deliveries. 
 
-# Motivation
+In order to interface with real hardware and control processes, another piece of software called STEVE is included. STEVE can control each GPIO pin of a given SoC (like a Raspberry Pi) independently. 
+Hopefully, this will allow for great flexibility and customization potential. 
 
-Secure, open source, configureable process control systems are hard to come by these days. 
+# Structure
 
-# Software architecture
+ADAM is structured into the ADAM Server and the STEVE client. The ADAM server does all the heavy lifting and servers the front-end (yes the Front-end should be separate from the back-end, no that is not on my list of things to do yet). 
 
-This suite is based off two elements: The ADAM mainframe and the STEVE client. Using Flask-SocketIO and Python-SocketIO in asynchronous configuration, it allows to send data back and forth. 
-A preshared key is set in the ADAM config and the corresponding STEVE device config. Using SSL (in the hopes to avoid MITM attacks), the PSK is sent from STEVE to ADAM in order to verify that the device may connect to the network.
+ADAM and STEVE communicate via asyncio. 
 
-On the ADAM end a SQLite database keeps meticolous records of measurements of processes. However, these are also logged onto the steve client.
 
-TODO:
-- Shutdown AsyncIO connection correctly
-- Finish UUID scheme for STEVE device
-- Check if CORS works if STEVE runs on an external device
-- Add granular user management
-- Add UI for SCADA type controls
+# Recent Changes
+- (Partially) Implemented the GUI for the Process Editor. 
+- Added nimiq QrCode Scanner for Inventory system (not attached to anything yet)
+- Pepped up the design a bit
 
-# Test Setup
-My test setup is a modified jam preserver connected to a Raspberry Pi Zero W, using the ADS1115 and ZS-042 Realtime Clock, connected via GX16-8 plug. 
-This allows me to drive the heating element using solid-state relays. I do not recommend this setup, as it requires in-depth knowledge of high voltage electricity precautions.
+# TODO
+- Redo database schema, connect databases
+- Sales / Customers / Delivery / Interfaces Dashboards
+- Fix UUID Scheme for STEVE
 
-# Development Setup
-I use virtual environments in order to develop for ADAM:
-`python3 -m venv ADAM_VENV`
-`python3 -m venv STEVE_VENV`
+# Credit
+- [Flask](https://flask.palletsprojects.com/en/2.0.x/) Glues it all together
+- [Drawflow](https://github.com/jerosoler/Drawflow) For the Drag-And-Drop Process Editor interface
+- [SchemaCrawler](https://www.schemacrawler.com/) For the Database Viewer (to make development easier)
+- [nimiq lightweight qr code readr](https://github.com/nimiq/qr-scanner) for scanning qr code
 
-Using two different terminals for each software:
-`source ADAM_VENV/source/bin/activate`
-`source STEVE_VENT/source/bin/activate`
-
-Installing the required software in ADAM_VENV:
-`pip install --upgrade pip wheel`
-`pip install -r requirements.txt`
-
-Please consider that this software is an active development and the requirements may therefor be outdated or subject to change. This applies to both the ADAM mainframe and the STEVE server.
-
-Gevent, Gevent-Websocket and Gunicorn should already exist in the virtual environment after requirments are installed.
-To start the ADAM mainframe:
-`gunicorn -k gevent -w 1 -b :5000 adam_v2:app --certfile=testcert.crt --keyfile=testcert.key`
-
-Installing the required software in STEVE_VENV:
-`pip install --upgrade pip wheel`
-`pip install -r requirements.txt`
-
-Running the STEVE client:
-`python3 steve.py`
-
-Please note that KeyboardInterrupt in STEVE client is buggy and it does not behave always as expected. I recommend using htop (F3->steve.py->F9->F9->Enter) in order to terminate STEVE client when necessary.
-
-# Boring License stuff
-So far I have chosen no license, and therefor the IP rights remain by me. Do ask if you're interested in using or developing this system.
+Probably quite a few others I have forgotten to add. If you're not listed, well, I'm sorry. 
