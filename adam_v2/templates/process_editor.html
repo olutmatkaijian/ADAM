@@ -11,9 +11,15 @@
 <div id="body">
   <div class="wrapper">
     <div class="col">
-      <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="heated_vessel">
-        <i class="fab pc-heated_vessel"></i><span> Heated Vessel</span>
+        
+        <!-- Instead of passing insecure html into this layout:
+        Tuple -> Contains Multiple Elements -> Each element contains a list of arguments -> pass arguments through Jinja2
+        like <div ... data-node=%%data_node[8][0]%%></div> -->
+        <!-- % for i in process_icon_elements % -->
+       <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="heated_vessel">
+            <i class="fab pc-heated_vessel"></i><span> Heated Vessel</span>
       </div>
+        <!-- % endfor % -->
       <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dumb_pump">
         <i class="fab pc-dumb_pump"></i><span> Pump </span>
       </div>
@@ -110,8 +116,25 @@
       console.log('Position mouse x:' + position.x + ' y:'+ position.y);
     })
 */
+    //editor.on('nodeMoved', function(id) {
+    //  console.log("Node moved " + id);
+    //})
+    
     editor.on('nodeMoved', function(id) {
-      console.log("Node moved " + id);
+        // console.log("Node moved " + id);
+        const module = editor.getModuleFromNodeId(id);
+        const data = editor.getNodeFromId(id);
+        const pos_x = data.pos_x;
+        const pos_y = data.pos_y;
+
+        
+        // Fix position: //  Logic Here. 
+        editor.drawflow.drawflow[module].data[id].pos_x = pos_x + 1;
+        editor.drawflow.drawflow[module].data[id].pos_y = pos_y + 1;
+        document.getElementById(`node-${id}`).style.left = (pos_x + 1) + "px";
+        document.getElementById(`node-${id}`).style.top = (pos_y + 1) + "px";
+        editor.updateConnectionNodes(`node-${id}`);
+        console.log("Node moved " + id);
     })
 
     editor.on('zoom', function(zoom) {
@@ -204,7 +227,6 @@
       }
       pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
       pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
-
 
 
       switch (name) {

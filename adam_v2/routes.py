@@ -54,12 +54,18 @@ def about():
     return render_template("about.html", title="About ADAM")
 
 # Process Editor
-# This is where the process is designed in terms of hardware
-# And where "Attach Hardware to GPIO HW ID 1 TO GPIO HW ID 40 is done
+# Testing my wonderfully shitty constructor for writing javascript and html
 @app.route('/process_editor')
 @login_required
 def process_editor():
     if check_permission(current_user, "PE"):
+        #TODO:
+        #Create Process Element Database, MongoDB
+        #Put Drawflow node args into Database
+        #Take Drawflow node args, put them into list
+        #In template, iterate node args
+        #And avoid passing unsafe html
+        #Great success guaranteed!
         return render_template("process_editor.html", title="Process Editor")
 
 # Process Status
