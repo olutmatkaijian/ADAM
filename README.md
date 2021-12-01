@@ -9,21 +9,12 @@
 # Recent Changes
 - Now with CheatSheet in the Process Editor that Shows/Hides Cheat Sheet
 on click
+- In Process Editor, Grid Snapping now works (1px resolution), making it easier to make orderly graphs
 
 # Currently working on
-- SVG(s) for the Editor
-- Grouped Tiles in the left Column
-- Hardware Setup Page
-- Write Hardware to Database from Hardware Setup Page, allow for SVG upload
-- Pull Hardware from Database -> Grouped Tiles
-
-# Would be nice to have
-- Grid Snapping in the Editor
-- Better Grid in the Editor (big and small squares)
-- Autorouting or at least a more rigid way of creating the connections
-- Different connection types: "Pipe", "Electrical Wire", etc.
-- Input/Output Pins in different locations (might already be possible)
-- Generate Node items purely through Jinja2 templates
+- Process Element Database for process editor
+- Dynamic loading from PED -> PE
+- Better route drawing from inputs to outputs (define the route by clicking instead of pulling)
 
 # Introduction
 
