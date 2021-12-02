@@ -5,7 +5,7 @@ from config import Config, GROUPS
 from werkzeug.security import generate_password_hash
 from datetime import datetime
 
-if os.path.isfile('adam_v2/users.db'):
+if os.path.isfile('adam_v2/users.sqldb'):
     print (len(users.User.query.all()))
     if len(users.User.query.all()) == 0:
         print("No user found, adding initial user")

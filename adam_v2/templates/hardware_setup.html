@@ -1,11 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h1>Hardware Setup</h1>
+<h1>Process Editor Node Setup</h1>
 
-<p>
-Here the user can add new hardware. "Hardware" consists mainly
-out of the amount of GPIO pins it can handled and how they are used.
-GPIO GROUPS may be added in the near future.</p>
+Here, process steps can be added to the process editor. These steps are called nodes,
+an contain at least a name and a class. HTML Elements like text Inputs, Sliders or similar
+can also be added.  Multiple HTML Elements are supported, click on "Add HTML Element" to do so.
+<form method="post" enctype="multipart/form-data">
+    <ul class=errors>
+    {% for error in pens.dfn_svg_element.errors %}
+      <li>{{ error }}</li>
+    {% endfor %}
+    </ul>
+    <hr>
+    <p>
+        {{ pens.hidden_tag() }}
+        {{ pens.file }}
+        Node name: {{pens.dfn_name}}<br>
+        Amount of Inputs: {{pens.dfn_inputs}}<br>
+        Amount of Outputs: {{pens.dfn_outputs}}<br>
+        Class: {{pens.dfn_class}}<br>
+        HTML Element:  {{pens.dfn_html_element}}<br>
+        HTML Element name: {{pens.dfn_html_element_name}}<br>
+        HTML Element data: {{pens.dfn_html_element_data}}<br>
+        {{pens.dfn_add_html_element}}<br>
+        TypeNode status: {{pens.dfn_typenode_status}}<br> 
+        Node data: {{pens.dfn_data}}
+        Image file (SVG): {{pens.dfn_svg_element}}<br>  
+
+        Submit: {{pens.dfn_submit}}
+    </p>
+</form>
 {% endblock %}
 

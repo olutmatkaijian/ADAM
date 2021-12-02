@@ -11,8 +11,11 @@ from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
 app.config.from_object(Config)
+# SQL for user management and other non-flexible stuff
 db = SQLAlchemy(app)
+# MongoDB for flexible stuff like device setup
 migrate = Migrate(app, db)
+
 login_manager = LoginManager()
 login_manager.init_app(app)
 migrate.init_app(app, db)
@@ -22,7 +25,7 @@ SocketIO is used to recieve data from the SoC hardware running STEVE
 """
 socketio = SocketIO(app, engineio_logger=True, logger=True, async_mode="threading")
 
-from adam_v2.models import users, PID_Control
+from adam_v2.models import users, PID_Control, process_editor_nodes
 
 # There would be better ways to do this
 # TODO: Remove this add new function "Install" when first running ADAM

@@ -1,6 +1,6 @@
 __pycache__/
 adam_v2/__pycache__
-adam_v2/*.db
+adam_v2/*.sqldb
 client/__pycache__
 migrations
 schemacrawler/
