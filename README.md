@@ -10,6 +10,7 @@
 - Now with CheatSheet in the Process Editor that Shows/Hides Cheat Sheet
 on click
 - In Process Editor, Grid Snapping now works (1px resolution), making it easier to make orderly graphs
+- Added a ProcessNode element for the SQL Database. While intentionally MongoDB was aimed for it would have been more work to implement, and witha few tricks, SQL will do fine.
 
 # Currently working on
 - Process Element Database for process editor
