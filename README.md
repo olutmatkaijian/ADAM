@@ -13,7 +13,8 @@ on click
 - Added a ProcessNode element for the SQL Database. While intentionally MongoDB was aimed for it would have been more work to implement, and witha few tricks, SQL will do fine.
 
 # Currently working on
-- Process Element Database for process editor
+- Loading the elements from the Process Element Database into the Editor
+- Multiple HTML Elements for Nodes instead of just one
 - Dynamic loading from PED -> PE
 - Better route drawing from inputs to outputs (define the route by clicking instead of pulling)
 
