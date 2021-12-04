@@ -87,10 +87,10 @@ def process_status():
         return render_template("process_status.html", title="Process Status")
 
 # Hardware Setup
-# This is where you can set up new hardware
-@app.route("/hardware_setup", methods=["GET","POST"])
+# This is where you can set up new process nodes
+@app.route("/processnode_setup", methods=["GET","POST"])
 @login_required
-def hardware_setup():
+def processnode_setup():
     if check_permission(current_user, "HWS"):
         pens = AddNodeForm()
         
@@ -103,20 +103,39 @@ def hardware_setup():
                 filename = secure_filename(f.filename)
                 if allowed_files(filename):
                     f.save(os.path.join(app.root_path, 'media/node_elements', filename))
-                    flash('Node element updated')
+                    flash("File Uploaded")
                 else:
                     flash('This type of file is not allowed')
                     
             #Jsonify HTML Element
             html_elements = json.dumps({pens.dfn_html_element_name.data: [pens.dfn_html_element.data, pens.dfn_html_element_data.data]})
             print(html_elements)
-            pdb_ins = ProcessNode(dfn_name = pens.dfn_name.data, dfn_class = pens.dfn_class.data, dfn_inputs = pens.dfn_inputs.data, dfn_outputs = pens.dfn_outputs.data, dfn_html_element = html_elements, dfn_data = pens.dfn_data.data, dfn_svg_element = os.path.join(app.root_path, 'media/node_elements', filename))
+            print(type(pens.dfn_name.data))
+            print(type(pens.dfn_class.data))
+            
+            #Ugly
+            if pens.dfn_svg_element.data:
+                pdb_ins = ProcessNode(dfn_name = pens.dfn_name.data, dfn_class = pens.dfn_class.data, dfn_inputs = pens.dfn_inputs.data, dfn_outputs = pens.dfn_outputs.data, dfn_html_element = html_elements, dfn_data = pens.dfn_data.data, dfn_svg_element = os.path.join(app.root_path, 'media/node_elements', filename))
+            elif pens.dfn_html_element != "None": 
+                pdb_ins = ProcessNode(dfn_name = pens.dfn_name.data, dfn_class = pens.dfn_class.data, dfn_inputs = pens.dfn_inputs.data, dfn_outputs = pens.dfn_outputs.data, dfn_html_element = html_elements, dfn_data = pens.dfn_data.data)
+            else:
+                pdb_ins = ProcessNode(dfn_name = pens.dfn_name.data, dfn_class = pens.dfn_class.data, dfn_inputs = pens.dfn_inputs.data, dfn_outputs = pens.dfn_outputs.data, dfn_data = pens.dfn_data.data)
+
             db.session.add(pdb_ins)
             db.session.commit()
-            flash('Inserted data into process database')
+            mksure = ProcessNode.query.filter_by(dfn_name = pens.dfn_name.data, dfn_class = pens.dfn_class.data)
+            flash('Inserted data into process database: ' + str(mksure))
             return redirect(url_for('hardware_setup'))
         return render_template("hardware_setup.html", title="Hardware Setup", pens=pens)
-
+       
+@login_required
+@app.route('/get_hardware_list/<dfn_class>', methods=["GET", "POST"])
+def get_hw_list_by_class(dfn_class):
+    
+    # Get a list of all hardware items
+    
+    return (str(hw_item))
+    
 # This now works - kind of 
 @app.route("/register_device")
 def register_device():

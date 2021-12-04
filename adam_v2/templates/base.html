@@ -18,7 +18,7 @@
         {% endif %}
         <a href="{{ url_for('about')}}">ABOUT</a>
         {% if current_user.permission_group and "HWS" in current_user.permission_group %}
-        <a href="{{ url_for('hardware_setup')}}">HARDWARE SETUP</a>
+        <a href="{{ url_for('processnode_setup')}}">New Process Node</a>
         {% endif %}
         {% if current_user.permission_group and "SALE" in current_user.permission_group %}
         <a href="{{ url_for('sales_management')}}">SALES</a>
