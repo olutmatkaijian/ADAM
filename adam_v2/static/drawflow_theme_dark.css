@@ -247,12 +247,18 @@
   display: flex;
 }
 
+/* NOTE:
+Modification added: "opacity: 0.99;"
+This is necessary that the Process Editor shows the images, but the image do no block drag-and drop
+*/
 .drag-drawflow {
   line-height: 50px;
   border-bottom: 1px solid var(--border-color);
   padding-left: 20px;
   cursor: move;
   user-select: none;
+  opacity: 0.99;
+  z-index: 1;
 }
 
 .btn-export {

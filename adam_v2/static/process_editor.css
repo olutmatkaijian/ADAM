@@ -1,4 +1,13 @@
-control_node {
+.control_node {
     width: 20px;
     height: 20px;
+}
+
+.item_grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+	grid-auto-rows: 80px;
+	grid-gap: 10px;
+	padding-top: 10px;
+	z-index: 0;
 }

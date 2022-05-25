@@ -16,13 +16,23 @@
         Tuple -> Contains Multiple Elements -> Each element contains a list of arguments -> pass arguments through Jinja2
         like <div ... data-node=%%data_node[8][0]%%></div> -->
         <!-- % for i in process_icon_elements % -->
-       <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="heated_vessel">
-            <i class="fab pc-heated_vessel"></i><span> Heated Vessel</span>
-      </div>
+
+        <div class ="item_grid">
+       		<div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="heated_vessel">
+            	<img draggable="false" src='/static/themes/craftbeerpi-ui-widgets/Einkocher.svg' height="60px">
+            	<i class="fab pc-heated_vessel"></i>            	
+     		</div>
         <!-- % endfor % -->
-      <div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dumb_pump">
-        <i class="fab pc-dumb_pump"></i><span> Pump </span>
-      </div>
+      		<div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dumb_pump">
+        		<img draggable="false" src='/static/themes/craftbeerpi-ui-widgets/P_gradi_3.svg' height="60px">
+        		<i class="fab pc-dumb_pump"></i>
+      		</div>
+
+      		<div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="ZKG">
+      			<img draggable="false" src='/static/themes/craftbeerpi-ui-widgets/120L_ZKG.svg' height="60px">
+      			<i class="fab pc-zkg"></i>
+      		</div> 
+      	</div>
       
     </div>
     <div class="col-right">
@@ -231,22 +241,29 @@
 
       switch (name) {
         case 'heated_vessel':
-        var heated_vessel = `
-        <div>
-          <div class="title-box"><i class="fab pc-heated_vessel"></i> <input type="date"></div>
-        </div>
-        `;
-          editor.addNode('heated_vessel', 1,  2, pos_x, pos_y, 'heated_vessel', {}, heated_vessel );
+         // editor.addNode('heated_vessel', 1,  2, pos_x, pos_y, 'heated_vessel', {}, heated_vessel );
+         // Image draggble = False must be for it to function properly
+         var heated_vessel = `
+         	 <img draggable="false" src='/static/themes/craftbeerpi-ui-widgets/Einkocher.svg'>    
+         	 <input type="int">
+         `
+
+         // name, inputs, outputs, pos_x, pos_y, class name, data, html or name of register node, typenode
+         editor.addNode('heated_vessel', 1, 2, pos_x, pos_y, 'img', {}, heated_vessel);
           break;
         case 'dumb_pump':
           var dumb_pump = `
-          <div>
-            <div class="title-box"><i class="fab pc-dumb_pump"></i> Dumb Pump</div>
-          </div>
+             <img draggable="false" src='/static/themes/craftbeerpi-ui-widgets/P_gradi_3.svg'>    
+         	 <input type="int">
           `
           editor.addNode('dumb_pump', 1, 1, pos_x, pos_y, 'dumb_pump', {}, dumb_pump );
           break;
-
+        case 'ZKG':
+        var ZKG = `
+        <div>
+        	<div class="title-box"><i class="fab pc-zkg"></i></div>
+        </div>`
+        break;
 //        default:
       }
     }
