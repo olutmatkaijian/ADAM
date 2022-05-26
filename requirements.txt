@@ -1,3 +1,4 @@
+wheel
 alembic==1.7.5
 bidict==0.21.4
 click==8.0.3
@@ -24,3 +25,4 @@ Werkzeug==2.0.2
 WTForms==3.0.0
 zope.event==4.5.0
 zope.interface==5.4.0
+Flask-JSGlue

@@ -112,7 +112,9 @@
 
 .drawflow .drawflow-node {
   display: var(--dfNodeType);
-  background: var(--dfNodeBackgroundColor);
+  /* background: var(--dfNodeBackgroundColor); */
+  resize: both;
+  background: rgba(204, 204, 204, 0.5);
   color: var(--dfNodeTextColor);
   border: var(--dfNodeBorderSize)  solid var(--dfNodeBorderColor);
   border-radius: var(--dfNodeBorderRadius);

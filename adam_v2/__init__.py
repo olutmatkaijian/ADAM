@@ -7,9 +7,11 @@ from flask_login import LoginManager
 import os
 from datetime import datetime
 from werkzeug.security import generate_password_hash
-
+from flask_jsglue import JSGlue
 
 app = Flask(__name__)
+#jsglue is necessary for process editor front end
+
 app.config.from_object(Config)
 # SQL for user management and other non-flexible stuff
 db = SQLAlchemy(app)
@@ -18,6 +20,9 @@ migrate = Migrate(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
+
+jsglue = JSGlue()
+jsglue.init_app(app)
 migrate.init_app(app, db)
 """! Initialize SocketIO 
 

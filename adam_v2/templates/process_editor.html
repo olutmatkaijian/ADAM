@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 
 
-
 {% block content %}
 <script src="{{url_for('static', filename='drawflow.min.js')}}"></script>
 <link rel="stylesheet" href="{{url_for('static', filename='drawflow_theme_dark.css')}}" />
@@ -23,7 +22,7 @@
 			{% for item in flist %}
 					<div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="{{item}}">
 						<img draggable="false" src="/static/themes/{{theme}}/{{item}}">
-						<i class="{{item}}"></i>
+						<i class="{{item.strip('.svg')}}"></i>
 					</div>
 			{% endfor %}
         </div>
@@ -229,44 +228,33 @@
         addNodeToDrawFlow(data, ev.clientX, ev.clientY);
       }
       
-          function addNodeToDrawFlow(name, pos_x, pos_y) {
-      if(editor.editor_mode === 'fixed') {
-        return false;
-      }
-      pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
-      pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
+      function addNodeToDrawFlow(name, pos_x, pos_y) {
+	      if(editor.editor_mode === 'fixed') {
+	        return false;
+	      }
+	      pos_x = pos_x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)) - (editor.precanvas.getBoundingClientRect().x * ( editor.precanvas.clientWidth / (editor.precanvas.clientWidth * editor.zoom)));
+	      pos_y = pos_y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)) - (editor.precanvas.getBoundingClientRect().y * ( editor.precanvas.clientHeight / (editor.precanvas.clientHeight * editor.zoom)));
 
+		fpath = Flask.url_for("static", {"filename":"themes/{{stf.theme.data}}/"+String(name)});
+		// In simplest configuration, just draw image onto the canvas
+		// There are probably better ways to do this but alas I am no computer scientist
+		var pe_html = String(`<img draggable="false" src='` + fpath + `'></img>`);
 
-      switch (name) {
-        case 'heated_vessel':
-         // editor.addNode('heated_vessel', 1,  2, pos_x, pos_y, 'heated_vessel', {}, heated_vessel );
-         // Image draggble = False must be for it to function properly
-         var heated_vessel = `
-         	 <img draggable="false" src='/static/themes/craftbeerpi-ui-widgets/Einkocher.svg'>    
-         	 <input type="int">
-         `
+		// name, inputs, outputs, pos_x, pos_y, class name, data, html or name of registered node, typenode
+		editor.addNode('', 0,0, pos_x, pos_y, 'pe_node', {}, pe_html);
+	    }
 
-         // name, inputs, outputs, pos_x, pos_y, class name, data, html or name of register node, typenode
-         editor.addNode('heated_vessel', 1, 2, pos_x, pos_y, 'img', {}, heated_vessel);
-          break;
-        case 'dumb_pump':
-          var dumb_pump = `
-             <img draggable="false" src='/static/themes/craftbeerpi-ui-widgets/P_gradi_3.svg'>    
-         	 <input type="int">
-          `
-          editor.addNode('dumb_pump', 1, 1, pos_x, pos_y, 'dumb_pump', {}, dumb_pump );
-          break;
-        case 'ZKG':
-        var ZKG = `
-        <div>
-        	<div class="title-box"><i class="fab pc-zkg"></i></div>
-        </div>`
-        break;
-//        default:
-      }
-    }
+	// Function to add I/O connectors to a node
+	// User drags input or output connector to the node and it should be automatically attached to said
+	// node
 
-    }
+	
+	function addNodeIO(node)
+	{
+		
+	}
+   }
         </script>
 </div>
 {% endblock %}
+	
