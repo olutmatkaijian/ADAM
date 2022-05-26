@@ -14,6 +14,17 @@ all processes are in essence created equal.
 
 It is written in python using the Flask microframework. For the process editor, Drawflow.io is being used. All parts of the software may be subject to change.
 
+# Recent Changes
+27/05/22: Further implementation of the Process Editor. It is now possible to load any SVG into the process editor by adding a folder in the "themes" directory. Select the correct theme using the "change theme" button on the top right. 
+
+# TODO
+- Make it so that when an object in the process editor is moved by clicking on the image, it does not spawn an empty node
+- Add functionality: Add I/O connectors to nodes by dragging and dropping them
+- Add functionality: Add an object inspector which displays node information and allows to change if necessary
+- Add functionality: Add drag-and-drop for HTML fields like InputField or RadioButton, Sliders, Labels, etc so that when they are dropped onto a node, they are automatically attached to it. 
+- Visual: Make the process editor show only the image and not the div
+- Add functionality: resizing of process editor nodes
+
 
 # Roadmap
 A roadmap for the development of the suite.
@@ -79,16 +90,7 @@ timeout 4h gunicorn -k gevent -w 1 -b :5000 adam_v2:app --certfile=testing.crt -
 
 **NOTE ABOUT DATABASE VIEWER**: To use the Database Viewer, you must have [schemacrawler](https://www.schemacrawler.com/) installed in ADAM/schemacrawler directory.
 
-# Recent Changes
-- (Partially) Implemented the GUI for the Process Editor. 
-- Added nimiq QrCode Scanner for Inventory system (not attached to anything yet)
-- Pepped up the design a bit
-- Added install script!
 
-# TODO
-- Redo database schema, connect databases
-- Sales / Customers / Delivery / Interfaces Dashboards
-- Fix UUID Scheme for STEVE
 
 # Credit
 - [Flask](https://flask.palletsprojects.com/en/2.0.x/) Glues it all together
