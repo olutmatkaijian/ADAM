@@ -1,0 +1,2 @@
+The theme defines not only how elements look like, but what inputs and outputs they have. 
+This is necessary so we can load the correct files into the process editor. 

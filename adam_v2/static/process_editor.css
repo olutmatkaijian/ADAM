@@ -4,10 +4,22 @@
 }
 
 .item_grid {
-	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
-	grid-auto-rows: 80px;
-	grid-gap: 10px;
+	margin: auto;
+	display: grid; 
+	grid-template-columns: repeat(3, 1fr);
+	grid-template-rows: 1fr;
+	grid-column-gap: 0; 
+	height: 50vh; 
+	overflow-y: scroll; 
+	margin-bottom: 10px; 
+}
+
+.item_grid img {
+	width: 60px;
+	height: 60px;
+}
+
+.pe_selector {
 	padding-top: 10px;
-	z-index: 0;
+	padding-bottom: 10px;
 }

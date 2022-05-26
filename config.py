@@ -3,9 +3,7 @@ import os
 ADAM_PSK = "dev1234"
 GROUPS = [("PE", "Process Editor"),("PS", "Process Status"), ("DBV", "Database Viewer"), ("INV", "Inventory"), ("HWS", "Hardware Setup"), ("SALE", "SALES"), ("DELI", "Deliveries"), ("USRADM", "User Administration")]
 LANGUAGE = "en"
-# Choices for Node Editor
-POSSIBLE_ELEMENTS = ['None', 'input', 'selectfield', 'radio', 'button', 'date', 'file', 'month']
-
+# Configuration file for the node editor theme
 
 class Config(object):
     SQLALCHEMY_DATABASE_URI = "sqlite:///main.sqldb"

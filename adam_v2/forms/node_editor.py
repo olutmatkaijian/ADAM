@@ -3,7 +3,6 @@ from wtforms import widgets, SelectField, StringField, SubmitField, BooleanField
 from wtforms import FileField, FormField
 from wtforms.validators import DataRequired, InputRequired, EqualTo, Length, regexp
 from wtforms import validators
-from config import POSSIBLE_ELEMENTS
 # Simple form to add define elements to add to the process editor
 # TODO: Add a way to import JSON objects so that multiple elements can be defined at once
 
@@ -16,7 +15,7 @@ class AddNodeForm(FlaskForm):
     dfn_class = StringField('dfn_class', validators=[DataRequired()])
     # Might have to remove the below html element stuff if I figure out how I did the 
     # adding of html elements
-    dfn_html_element = SelectField('dfn_html_element', choices=POSSIBLE_ELEMENTS)
+    dfn_html_element = SelectField('dfn_html_element')
     dfn_html_element_name = StringField('dfn_html_element_name')
     dfn_html_element_data = StringField('dfn_html_element_data')
     dfn_add_html_element = SubmitField('Add another HTML Element')
@@ -27,7 +26,7 @@ class AddNodeForm(FlaskForm):
     dfn_submit = SubmitField('Submit')
 
 class AddHTMLForm(FlaskForm):
-    dfn_html_element = SelectField('dfn_html_element', choices=POSSIBLE_ELEMENTS)
+    dfn_html_element = SelectField('dfn_html_element')
     dfn_html_element_name = StringField('dfn_html_element_name')
     dfn_html_element_data = StringField('dfn_html_element_data')
     

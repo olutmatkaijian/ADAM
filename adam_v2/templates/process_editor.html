@@ -11,28 +11,26 @@
 <div id="body">
   <div class="wrapper">
     <div class="col">
-        
-        <!-- Instead of passing insecure html into this layout:
-        Tuple -> Contains Multiple Elements -> Each element contains a list of arguments -> pass arguments through Jinja2
-        like <div ... data-node=%%data_node[8][0]%%></div> -->
-        <!-- % for i in process_icon_elements % -->
+    <div class="pe_selector">
+        <form method=post action="/process_editor">
+        	{{stf.theme}}
+          <input type=submit value=Change>
+        </form>
+    </div>
 
-        <div class ="item_grid">
-       		<div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="heated_vessel">
-            	<img draggable="false" src='/static/themes/craftbeerpi-ui-widgets/Einkocher.svg' height="60px">
-            	<i class="fab pc-heated_vessel"></i>            	
-     		</div>
-        <!-- % endfor % -->
-      		<div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="dumb_pump">
-        		<img draggable="false" src='/static/themes/craftbeerpi-ui-widgets/P_gradi_3.svg' height="60px">
-        		<i class="fab pc-dumb_pump"></i>
-      		</div>
 
-      		<div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="ZKG">
-      			<img draggable="false" src='/static/themes/craftbeerpi-ui-widgets/120L_ZKG.svg' height="60px">
-      			<i class="fab pc-zkg"></i>
-      		</div> 
-      	</div>
+        <div class="item_grid">
+			{% for item in flist %}
+					<div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="{{item}}">
+						<img draggable="false" src="/static/themes/{{theme}}/{{item}}">
+						<i class="{{item}}"></i>
+					</div>
+			{% endfor %}
+        </div>
+
+       <div class="pe_modify_element">
+		<!-- this will be for modifying nodes with inputs / outputs / labels/ inputboxes / etc -->
+       </div>
       
     </div>
     <div class="col-right">

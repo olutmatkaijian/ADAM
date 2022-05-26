@@ -10,6 +10,7 @@ from adam_v2.forms.change_password_form import change_password_form
 from adam_v2.forms.node_editor import AddNodeForm
 from adam_v2.models.users import User
 from adam_v2.models.process_editor_nodes import ProcessNode
+from adam_v2.forms.process_editor_forms import SelectThemeForm
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import secure_filename
 from flask_login import current_user
@@ -64,18 +65,38 @@ def about():
 
 # Process Editor
 # Testing my wonderfully shitty constructor for writing javascript and html
-@app.route('/process_editor')
+@app.route('/process_editor', methods = ["POST", "GET"])
 @login_required
 def process_editor():
     if check_permission(current_user, "PE"):
-        #TODO:
+        stf = SelectThemeForm()
+
+        # We need to get all the theme directories, but only the first sub-directory
+        main_dir = os.getcwd()
+        theme_dir = main_dir + '/adam_v2/static/themes'
+        list_subfolders = [f.name for f in os.scandir(theme_dir) if f.is_dir()]
+
+        stf.theme.choices = list_subfolders
+        
+        if request.method == "POST":
+            flist = []
+            print(stf.theme.data)
+
+            for file in os.listdir(theme_dir+"/"+str(stf.theme.data)):
+                if file.endswith('svg'):
+                    flist.append(file)
+
+            return render_template("process_editor.html", title="Process Editor (" + str(stf.theme.data) + ")", flist = flist, theme=stf.theme.data, stf = stf)
+            print(flist)
+        
+#TODO:
         #Create Process Element Database, MongoDB
         #Put Drawflow node args into Database
         #Take Drawflow node args, put them into list
         #In template, iterate node args
         #And avoid passing unsafe html
         #Great success guaranteed!
-        return render_template("process_editor.html", title="Process Editor")
+        return render_template("process_editor.html", title="Process Editor", stf = stf)
 
 # Process Status
 # This is where you can see the ongoing process
@@ -284,3 +305,9 @@ def refresh():
 def unauthorized():
     flash("Authorization failed")
     return redirect(url_for("ADAM_login"))
+
+
+# Go into theme directory
+# Check each directory for config.ini
+# Acquire directory_name for a theme 
+# Acquire all elements from said directory and pass them on to the process editor
