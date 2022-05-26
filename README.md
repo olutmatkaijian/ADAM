@@ -3,33 +3,17 @@
 
 
 ![current_progress](documents/ADAM_UI_CHEATSHEET.png)
-**Current progress picture**
-**This is a work in progress! It is not functional (yet)!**
+A somewhat recent picture of the UI
 
-# Recent Changes
-- Now with CheatSheet in the Process Editor that Shows/Hides Cheat Sheet
-on click
-- In Process Editor, Grid Snapping now works (1px resolution), making it easier to make orderly graphs
-- Added a ProcessNode element for the SQL Database. While intentionally MongoDB was aimed for it would have been more work to implement, and witha few tricks, SQL will do fine.
-- New database model for GPIO-Enabled hardware, to seperate logic nodes ("Process Nodes") from hardware nodes. 
+# Introduction
+When this software is finally useable (which is not at the moment), it should be a simple to use process design and supervision system for any kind of 
+project. To achieve this goal it is split into the process editor - a design interface to create your own process dashboard, expandable with your own "themes".
+The other part is a control dashboard, which will allow you to supervise and control your process and log all necessary information.
+While originally designed for homebrewing applications, I have decided to expand the scope to a more generalized manner as I have come to the conclusion that
+all processes are in essence created equal. 
 
-# Most important 
-- Create setup page for GPIO Hardware
-- Create a sensor database model
-- Create measurements data base model
-- somehow relate them all into a living organism
+It is written in python using the Flask microframework. For the process editor, Drawflow.io is being used. All parts of the software may be subject to change.
 
-# Currently working on
-- Loading the elements from the Process Element Database into the Editor
-- Multiple HTML Elements for Nodes instead of just one
-- Dynamic loading from PED -> PE
-- Better route drawing from inputs to outputs (define the route by clicking instead of pulling)
-
-# Future work
-- Rewrite STEVE client
-
-# Far future work
-- Attempt to implement something like river or creme.py to continously improve PID parameters. Why? Why not!
 
 # Roadmap
 A roadmap for the development of the suite.
@@ -60,21 +44,6 @@ The version 0.01 shall contain the necessary basics needed to design, view and c
 
 ### Release 1.0
 - Final release. The software works as intended and is safe to use. 
-
-
-# Introduction
-
-ADAM is short for "Automated Data Acquisition and Management". This software aims to be a suite for acempquiring and managing data (duh) in process control. 
-It therefor will have a SCADA-esque interface. Users will be able to define Processes and Recipes. They will also be able to manage Inventory, Sales, Customers and Deliveries. 
-
-In order to interface with real hardware and control processes, another piece of software called STEVE is included. STEVE can control each GPIO pin of a given SoC (like a Raspberry Pi) independently. 
-Hopefully, this will allow for great flexibility and customization potential. 
-
-# Structure
-
-ADAM is structured into the ADAM Server and the STEVE client. The ADAM server does all the heavy lifting and servers the front-end (yes the Front-end should be separate from the back-end, no that is not on my list of things to do yet). 
-
-ADAM and STEVE communicate via socketio (my bad, I have mistaken the names of asyncio and socketio, although asyncio may be part of ADAM for several tasks). 
 
 # Usage
 
@@ -127,5 +96,6 @@ timeout 4h gunicorn -k gevent -w 1 -b :5000 adam_v2:app --certfile=testing.crt -
 - [SchemaCrawler](https://www.schemacrawler.com/) For the Database Viewer (to make development easier)
 - [nimiq lightweight qr code readr](https://github.com/nimiq/qr-scanner) for scanning qr code
 - [Red October](https://www.neogrey.com/portfolio/red-october/) font for the top navigation bar 
+- [CraftbeerPi-UI-Widgets](https://github.com/craftbeerpi/craftbeerpi-ui-widgets) For the widgets in the process editor 
 
 Probably quite a few others I have forgotten to add. If you're not listed, well, I'm sorry. 
