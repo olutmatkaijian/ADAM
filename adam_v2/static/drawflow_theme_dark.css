@@ -127,6 +127,11 @@
   box-shadow:  var(--dfNodeBoxShadowHL) var(--dfNodeBoxShadowVL) var(--dfNodeBoxShadowBR) var(--dfNodeBoxShadowS) var(--dfNodeBoxShadowColor);
 }
 
+/* This is important for the following reason: If it weren't here, and you'd click on a node in the process editor, onto the image, it would
+start dragging the image. When the image has been dragged, it would create a new empty node*/
+.drawflow .drawflow-node img {
+	pointer-events: none; 
+}
 .drawflow .drawflow-node:hover {
   background: var(--dfNodeHoverBackgroundColor);
   color: var(--dfNodeHoverTextColor);
