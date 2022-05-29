@@ -19,8 +19,8 @@ It is written in python using the Flask microframework. For the process editor, 
 29/05/22: Bug fixed in Process Editor. Dynamic adding of Input/Output to node elements. Removing them is not possible at the moment as this will delete the node. 
 
 # TODO
-X (Make it so that when an object in the process editor is moved by clicking on the image, it does not spawn an empty node) (Fixed 29/05/22)
-X (Add functionality: Add I/O connectors to nodes by dragging and dropping them)
+- ~~Make it so that when an object in the process editor is moved by clicking on the image, it does not spawn an empty node)~~ (Fixed 29/05/22)
+- ~~(Add functionality: Add I/O connectors to nodes by dragging and dropping them)~~ (Fixed 29/05/22)
 - Add functionality: Add an object inspector which displays node information and allows to change if necessary
 - Add functionality: Add drag-and-drop for HTML fields like InputField or RadioButton, Sliders, Labels, etc so that when they are dropped onto a node, they are automatically attached to it. 
 - Visual: Make the process editor show only the image and not the div
