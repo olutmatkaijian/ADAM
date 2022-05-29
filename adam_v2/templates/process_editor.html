@@ -21,14 +21,21 @@
         <div class="item_grid">
 			{% for item in flist %}
 					<div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="{{item}}">
-						<img draggable="false" src="/static/themes/{{theme}}/{{item}}">
+						<img draggable="false" src="/static/themes/{{theme}}/{{item}}"></img>
 						<i class="{{item.strip('.svg')}}"></i>
 					</div>
 			{% endfor %}
         </div>
 
+	   <div class="item_grid">
        <div class="pe_modify_element">
-		<!-- this will be for modifying nodes with inputs / outputs / labels/ inputboxes / etc -->
+			<div class="drag-input-connector" draggable="true" ondragstart="drag(event)">
+			<img draggable="false" src="/static/input-svgrepo-com.svg"></img>
+			</div>
+			<div class="drag-output-connector" draggable="true" ondragstart="drag(event)">
+			<img draggable="false" src="/static/output-svgrepo-com.svg"></img>
+			</div>
+       </div>
        </div>
       
     </div>
@@ -59,9 +66,9 @@
             </ul>
         </div>
         <div class="bar-zoom">
-          <img class="procedit_zoomout" onclick="editor.zoom_out()" src="{{url_for('static', filename='zoom-out-svgrepo-com.svg')}}"/>
-          <img class="procedit_zoomreset" onclick="editor.zoom_reset()" src="{{url_for('static', filename='compass-svgrepo-com.svg')}}"/>
-          <img class="procedit_zoomin" onclick="editor.zoom_in()" src="{{url_for('static', filename='zoom-in-svgrepo-com.svg')}}"/>
+          <img draggable="false" class="procedit_zoomout" onclick="editor.zoom_out()" src="{{url_for('static', filename='zoom-out-svgrepo-com.svg')}}"/>
+          <img draggable="false" class="procedit_zoomreset" onclick="editor.zoom_reset()" src="{{url_for('static', filename='compass-svgrepo-com.svg')}}"/>
+          <img draggable="false" class="procedit_zoomin" onclick="editor.zoom_in()" src="{{url_for('static', filename='zoom-in-svgrepo-com.svg')}}"/>
         </div>
       </div>
     </div>
@@ -75,7 +82,6 @@
     editor.curvature = 0;
     editor.reroute_fix_curvature = false;
     editor.force_first_input = true;
-
   /*
     editor.createCurvature = function(start_pos_x, start_pos_y, end_pos_x, end_pos_y, curvature_value, type) {
       var center_x = ((end_pos_x - start_pos_x)/2)+start_pos_x;
@@ -185,6 +191,11 @@
         mobile_item_selec = ev.target.closest(".drag-drawflow").getAttribute('data-node');
       } else {
       ev.dataTransfer.setData("node", ev.target.getAttribute('data-node'));
+
+      // This is important for the function to drop elements onto the nodes later on
+	  source_element = ev.target.className;
+	  ev.dataTransfer.setData("element-type", source_element);
+
       }
     }
     function changeMode(option) {
@@ -218,17 +229,68 @@
     function drop(ev) {
       if (ev.type === "touchend") {
         var parentdrawflow = document.elementFromPoint( mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY).closest("#drawflow");
-        if(parentdrawflow != null) {
+        if(parentdrawflow != null && parentdrawflow.className == "drag-drawflow") {
           addNodeToDrawFlow(mobile_item_selec, mobile_last_move.touches[0].clientX, mobile_last_move.touches[0].clientY);
         }
         mobile_item_selec = '';
       } else {
-        ev.preventDefault();
-        var data = ev.dataTransfer.getData("node");
-        addNodeToDrawFlow(data, ev.clientX, ev.clientY);
-      }
+       ev.preventDefault();
+       var data = ev.dataTransfer.getData("node");
+
+      addNodeToDrawFlow(data, ev.clientX, ev.clientY);
+
+      // Unless, of course, we are dropping elements onto nodes
+
+	  // Get the position of the mouse to determine which node we are adding input or output to
+     
+	  // TODO: Make this a better function
+		  var add_element_x = event.clientX; 
+		  var add_element_y = event.clientY;
+			add_conn_element = document.elementFromPoint(add_element_x, add_element_y);
+			console.log(add_conn_element);
+
+	// If we drop onto the image, it will select the div of the image
+	// this means we need to get the parent node of the image for it to work IF THE ID = ""
+		console.log(add_conn_element.className);
+
+		// Since it will give ANY div that we drop onto, we must make sure we are dropping into a legit node
+		if(add_conn_element.className === "drawflow_content_node")
+		{
+			add_conn_element = add_conn_element.parentNode;
+			console.log('drawflow_content_node: ' + String(add_conn_element));
+		}
+
+		if(add_conn_element.className === "drawflow-node pnode" || add_conn_element.className === "drawflow-node pnode selected")
+		{
+			
+	  		// Get the class of dragged element
+			element_type = ev.dataTransfer.getData("element-type");
+			console.log("Class name source: " + element_type);
+			console.log('add_con_element id: ' + add_conn_element.id);
+			add_io_ondrop(element_type, add_conn_element.id);
+		}
+		
+	  }
+
+
+	  function add_io_ondrop(element_name, node_id)
+	  {
+	  	// This is a hack because drawflow acts strange
+	  	// Suspect: Inconsistency in Drawflow of use of "node-x" v "x" as ID
+	  	
+		node_id = node_id.substring(node_id.indexOf("-") + 1);
+		console.log(node_id);
+
+	  	if(element_type === "drag-input-connector"){
+				editor.addNodeInput(node_id);
+		}
+			if(element_type === "drag-output-connector"){
+				editor.addNodeOutput(node_id);
+			}
+	  }
       
       function addNodeToDrawFlow(name, pos_x, pos_y) {
+      console.log(name.className);
 	      if(editor.editor_mode === 'fixed') {
 	        return false;
 	      }
@@ -241,18 +303,16 @@
 		var pe_html = String(`<img draggable="false" src='` + fpath + `'></img>`);
 
 		// name, inputs, outputs, pos_x, pos_y, class name, data, html or name of registered node, typenode
-		editor.addNode('', 0,0, pos_x, pos_y, 'pe_node', {}, pe_html);
+
+		// TODO: Fix this
+		// Description: For reasons unbeknownst to man JavaScript believes that "null" is a string.
+		// Therefor, we have to treat it as such.
+		// IRONICALLY, if the name is set empty, it also does not count as null, but as a string. 
+		console.log(typeof name);
+		if(name != "null" && name != ""){
+			editor.addNode('', 0,0, pos_x, pos_y,'pnode', {}, pe_html);
+			}
 	    }
-
-	// Function to add I/O connectors to a node
-	// User drags input or output connector to the node and it should be automatically attached to said
-	// node
-
-	
-	function addNodeIO(node)
-	{
-		
-	}
    }
         </script>
 </div>
