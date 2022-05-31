@@ -2,21 +2,30 @@
 
 
 
-![current_progress](documents/ADAM_UI_CHEATSHEET.png)
+![current_progress](documents/ADAM_PE_V1.1.png)
 A somewhat recent picture of the UI
-
-# Introduction
-When this software is finally useable (which is not at the moment), it should be a simple to use process design and supervision system for any kind of 
-project. To achieve this goal it is split into the process editor - a design interface to create your own process dashboard, expandable with your own "themes".
-The other part is a control dashboard, which will allow you to supervise and control your process and log all necessary information.
-While originally designed for homebrewing applications, I have decided to expand the scope to a more generalized manner as I have come to the conclusion that
-all processes are in essence created equal. 
-
-It is written in python using the Flask microframework. For the process editor, Drawflow.io is being used. All parts of the software may be subject to change.
 
 # Recent Changes
 27/05/22: Further implementation of the Process Editor. It is now possible to load any SVG into the process editor by adding a folder in the "themes" directory. Select the correct theme using the "change theme" button on the top right. 
 29/05/22: Bug fixed in Process Editor. Dynamic adding of Input/Output to node elements. Removing them is not possible at the moment as this will delete the node. 
+31/05/22: Implemented first parts of functionality towards the object inspector. The Object Inspector will work in the following manner: When a user selects a node AND the object inspector is currently visible, it load all variables of the selected object into a two column table. In this table, users will be able to enter data, which will then be translated to the corresponding object. This will allow the user to change for example the name of a process object. 
+
+# Introduction
+The goal of ADAM is to allow users of various skill levels to create process interfaces using a drag and drop interface, while also allowing users to design / "program" the process in a drag-and-drop manner. These processes can then be supervised in real time using the process viewer.
+There are further features that might be implemented when the process control part of ADAM works as intended, but as I have little time now to spend on it, I am focusing on the main objective: That is to create, control and supervise processes from an easy to use web interface.
+
+It is to be noted that ADAM is in pre-alpha stage. This means it does not yet work as intended. While it is possible to run it, doing so is of no use for anybody who is not considering to develop it further. You have been warned. 
+
+# Why make a new software?
+I have been asked by some people why I would create a new software and don't just use for example CraftBeerPi or RapidSCADA. The reason is simple: That is not the software I envision using. CraftBeerPi is very specialized towards the control of brewing processes. The RapidSCADA interface and usage is very complicated in my humble opintion - that is to say, it is not a bad software, it's just not what I wish to use. 
+ADAM aims to be simple to use but have the general flexibility to allow for more complicated process designs. During my development of ADAM I have come to the conclusion that most use cases of process control are very similar: "Turn on X", "Keep at Temp Y", "Turn Off" for example. To this end, I have decided to write a software for this purpose.
+Furthermore, I enjoy learning about this kind of stuff and I very much prefer the learning by doing approach. I also want to make it as simple as possible to setup, reflected in the few rather simplistic but very useful scripts I wrote to install and run it. 
+
+# Technical: How does it work?
+I use the [Drawflow](https://github.com/jerosoler/Drawflow) for the drag and drop editor. This is a JavaScript library that allows users to create flowcharts using drag and drop. Behind this, I run [Flask](https://flask.palletsprojects.com/en/2.0.x/) for the logical parts of the software and to interface with hardware - this is currently only implemented so rudimentarily it might as well not exist. At the beginning I used asyncio to control the process and got good results with it, but am seriously considering to move to MQTT or similar. 
+ADAM is only one part of the software. I have also written another piece of software - STEVE - which can be run on a raspberry pi for example. When a process is to be run, ADAM will send all important process information to STEVE. Using this information the process will be run while continously sending data back to ADAM. This is done in this manner for a simple manner: should the connection to ADAM be impaired at any point of time it should not affect the outcome of the process. STEVE should be able to work independently from ADAM until the process is finished.
+As further redundancy at some point a human to machine interface has to be implemented in STEVE, for example by touch screen. This way, the process can be supervised and controlled even if the connection to ADAM is impaired or severed.
+
 
 # TODO
 - ~~Make it so that when an object in the process editor is moved by clicking on the image, it does not spawn an empty node)~~ (Fixed 29/05/22)
