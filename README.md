@@ -7,7 +7,9 @@ A somewhat recent picture of the UI
 
 # Recent Changes
 27/05/22: Further implementation of the Process Editor. It is now possible to load any SVG into the process editor by adding a folder in the "themes" directory. Select the correct theme using the "change theme" button on the top right. 
+
 29/05/22: Bug fixed in Process Editor. Dynamic adding of Input/Output to node elements. Removing them is not possible at the moment as this will delete the node. 
+
 31/05/22: Implemented first parts of functionality towards the object inspector. The Object Inspector will work in the following manner: When a user selects a node AND the object inspector is currently visible, it load all variables of the selected object into a two column table. In this table, users will be able to enter data, which will then be translated to the corresponding object. This will allow the user to change for example the name of a process object. 
 
 # Introduction
