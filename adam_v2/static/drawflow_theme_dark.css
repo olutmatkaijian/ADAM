@@ -381,6 +381,47 @@ start dragging the image. When the image has been dragged, it would create a new
   display: flex;
 }
 
+.btn-inspector {
+  position: absolute;
+  top: 10px; 
+  margin-left: 25%;
+  margin-right: 75%;
+  background-color: lightgrey;
+  font-weight: bold;
+  border: 1px solid #0e5ba3;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 4;
+  text-align: center;
+  width: 146px;
+  height: 16.5px;
+  font-family: "Red October";
+  text-align: center;
+}
+
+
+.btn-inspector-inline {
+  position: absolute;
+  background-color: lightgrey;
+  font-weight: bold;
+  border: 1px solid #0e5ba3;
+  color: black;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  z-index: 4;
+  text-align: center;
+  width: 5%;
+  height: 5%;
+  left: 89.5%;
+  right: 0px;
+  top: 0px; 
+  font-family: "Red October";
+  text-align: center;
+}
+
 .cs_shown {
     width: 146px;
 }

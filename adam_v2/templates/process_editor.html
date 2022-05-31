@@ -8,6 +8,19 @@
 <link rel="stylesheet" href="{{url_for('static', filename='drawflow.min.css')}}") />
 
 <div id="body">
+
+<!-- Object Inspector -->
+<div id="inspector">
+	<div class="btn-inspector-inline" onclick="hide_or_show('inspector')">X</div>
+
+	<div id="inspectorheader" draggable="true">
+	Object Inspector
+	</div>
+	<!-- Split select box with corresponding info -->
+ </div>
+
+
+
   <div class="wrapper">
     <div class="col">
     <div class="pe_selector">
@@ -44,6 +57,7 @@
       <div id="drawflow" ondrop="drop(event)" ondragover="allowDrop(event)">
 
         <div class="btn-export" onclick="console.log(editor.export())">Export</div>
+         <div class="btn-inspector" onclick="hide_or_show('inspector')">INSPECTOR</div>
         <div class="btn-clear" onclick="editor.clearModuleSelected()">Clear</div>
         <div class="btn-hide-cheat">
             <div   class="cs_shown" onclick="hideCheat('show')" id="cs_shown">CHEATSHEET</div>
@@ -74,6 +88,62 @@
     </div>
   </div>
 
+
+<script>
+	dragElement(document.getElementById("inspector"));
+
+function dragElement(elmnt) {
+  var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+  if (document.getElementById(elmnt.id + "header")) {
+    // if present, the header is where you move the DIV from:
+    document.getElementById(elmnt.id + "header").onmousedown = dragMouseDown;
+  } else {
+    // otherwise, move the DIV from anywhere inside the DIV:
+    elmnt.onmousedown = dragMouseDown;
+  }
+
+  function dragMouseDown(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // get the mouse cursor position at startup:
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    document.onmouseup = closeDragElement;
+    // call a function whenever the cursor moves:
+    document.onmousemove = elementDrag;
+  }
+
+  function elementDrag(e) {
+    e = e || window.event;
+    e.preventDefault();
+    // calculate the new cursor position:
+    pos1 = pos3 - e.clientX;
+    pos2 = pos4 - e.clientY;
+    pos3 = e.clientX;
+    pos4 = e.clientY;
+    // set the element's new position:
+    elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+    elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+  }
+
+  function closeDragElement() {
+    // stop moving when mouse button is released:
+    document.onmouseup = null;
+    document.onmousemove = null;
+  }
+}
+
+function hide_or_show(element) {
+  var x = document.getElementById(element);
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+} 
+
+</script>
+
     <script>
     // Shamelessly stolen
     var id = document.getElementById("drawflow");
@@ -82,19 +152,9 @@
     editor.curvature = 0;
     editor.reroute_fix_curvature = false;
     editor.force_first_input = true;
-  /*
-    editor.createCurvature = function(start_pos_x, start_pos_y, end_pos_x, end_pos_y, curvature_value, type) {
-      var center_x = ((end_pos_x - start_pos_x)/2)+start_pos_x;
-      return ' M ' + start_pos_x + ' ' + start_pos_y + ' L '+ center_x +' ' +  start_pos_y  + ' L ' + center_x + ' ' +  end_pos_y  + ' L ' + end_pos_x + ' ' + end_pos_y;
-    }*/
-
-
-
-    
 
     editor.start();
 
-    // Events!
     editor.on('nodeCreated', function(id) {
       console.log("Node created " + id);
     })
@@ -124,14 +184,6 @@
       console.log('Connection removed');
       console.log(connection);
     })
-/*
-    editor.on('mouseMove', function(position) {
-      console.log('Position mouse x:' + position.x + ' y:'+ position.y);
-    })
-*/
-    //editor.on('nodeMoved', function(id) {
-    //  console.log("Node moved " + id);
-    //})
     
     editor.on('nodeMoved', function(id) {
         // console.log("Node moved " + id);
@@ -238,12 +290,9 @@
        var data = ev.dataTransfer.getData("node");
 
       addNodeToDrawFlow(data, ev.clientX, ev.clientY);
-
-      // Unless, of course, we are dropping elements onto nodes
-
-	  // Get the position of the mouse to determine which node we are adding input or output to
      
 	  // TODO: Make this a better function
+	  // This takes the element beneath the mouse so we know which element to drag & drop the IO connectors and HTML elements on to it
 		  var add_element_x = event.clientX; 
 		  var add_element_y = event.clientY;
 			add_conn_element = document.elementFromPoint(add_element_x, add_element_y);
