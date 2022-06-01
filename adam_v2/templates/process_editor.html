@@ -11,12 +11,23 @@
 
 <!-- Object Inspector -->
 <div id="inspector">
-	<div class="btn-inspector-inline" onclick="hide_or_show('inspector')">X</div>
+	<div class="btn-inspector-inline" onclick="hide_or_show('inspector')">
+		X
+	</div>
 
 	<div id="inspectorheader" draggable="true">
-	Object Inspector
+		Object Inspector
 	</div>
-	<!-- Split select box with corresponding info -->
+
+	<!-- This seems simpler and better than a table -->
+	<div class="row" id="inspector_rows">
+		<div class="column" id="inspector_column1">
+			Column 1
+		</div>
+		<div class="column" id="inspector_column2">
+			Column 2
+		</div>
+	</div>
  </div>
 
 
@@ -164,6 +175,13 @@ function hide_or_show(element) {
     })
 
     editor.on('nodeSelected', function(id) {
+    // When this method is called it should load all
+    // relevant data into the object inspector
+    // if the inspector is visible
+
+    // if it is not visible, it should skip the loading step
+    // however, when it does become visible
+    // the data should be loaded anyways
       console.log("Node selected " + id);
     })
 
