@@ -12,6 +12,8 @@ A somewhat recent picture of the UI
 
 31/05/22: Implemented first parts of functionality towards the object inspector. The Object Inspector will work in the following manner: When a user selects a node AND the object inspector is currently visible, it load all variables of the selected object into a two column table. In this table, users will be able to enter data, which will then be translated to the corresponding object. This will allow the user to change for example the name of a process object. 
 
+02/06/22: The object inspector now works almost as intended. Names, classes, html and data of nodes can now be changed, but it still is slightly buggy. Disabled boxes are managed by drawflow, and cannot be changed by the user. 
+
 # Introduction
 The goal of ADAM is to allow users of various skill levels to create process interfaces using a drag and drop interface, while also allowing users to design / "program" the process in a drag-and-drop manner. These processes can then be supervised in real time using the process viewer.
 There are further features that might be implemented when the process control part of ADAM works as intended, but as I have little time now to spend on it, I am focusing on the main objective: That is to create, control and supervise processes from an easy to use web interface.
@@ -36,6 +38,7 @@ As further redundancy at some point a human to machine interface has to be imple
 - Add functionality: Add drag-and-drop for HTML fields like InputField or RadioButton, Sliders, Labels, etc so that when they are dropped onto a node, they are automatically attached to it. 
 - Visual: Make the process editor show only the image and not the div
 - Add functionality: resizing of process editor nodes
+- Add functionality: Snapping nodes together at inputs and outputs
 
 
 # Roadmap
