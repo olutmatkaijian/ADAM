@@ -185,8 +185,7 @@
                 <li>Arrow with box -> New input node (left)</li>
                 <li>Arrow without box -> New output node (right)<li>
                 <li>Drag elements onto canvas for new node </li>
-                <li>Drag HTML elements onto node for new node HTML </li>
-                
+                <li>Drag HTML elements onto node for new node HTML</li>
             </ul>
         </div>
         <div class="bar-zoom">
@@ -447,7 +446,7 @@ function hide_or_show(element) {
       // This is important for the function to drop elements onto the nodes later on
 	  source_element = ev.target.className;
 	  console.log("Class name: " + source_element);
-	
+	  ev.dataTransfer.setData("element-type", source_element);
       }
     }
     function changeMode(option) {
@@ -490,13 +489,14 @@ function hide_or_show(element) {
        var data = ev.dataTransfer.getData("node");
 
       addNodeToDrawFlow(data, ev.clientX, ev.clientY);
+      console.log("called addNodeToDrawFlow");
      
 	  // TODO: Make this a better function
 	  // This takes the element beneath the mouse so we know which element to drag & drop the IO connectors and HTML elements on to it
 		  var add_element_x = event.clientX; 
 		  var add_element_y = event.clientY;
-			add_conn_element = document.elementFromPoint(add_element_x, add_element_y);
-		//	console.log(add_conn_element);
+		add_conn_element = document.elementFromPoint(add_element_x, add_element_y);
+		console.log("Add conn element is: " + add_conn_element);
 
 	// If we drop onto the image, it will select the div of the image
 	// this means we need to get the parent node of the image for it to work IF THE ID = ""
@@ -514,8 +514,8 @@ function hide_or_show(element) {
 			
 	  		// Get the class of dragged element
 			element_type = ev.dataTransfer.getData("element-type");
-		//	console.log("Class name source: " + element_type);
-		//	console.log('add_con_element id: ' + add_conn_element.id);
+			console.log("Drop function element_type is: " + element_type);
+			console.log('add_con_element id: ' + add_conn_element.id);
 			add_io_ondrop(element_type, add_conn_element.id);
 		}
 		
@@ -528,7 +528,7 @@ function hide_or_show(element) {
 	  	// Suspect: Inconsistency in Drawflow of use of "node-x" v "x" as ID
 	  	
 		node_id = node_id.substring(node_id.indexOf("-") + 1);
-	//	console.log(node_id);
+		console.log(node_id);
 
 	  	if(element_type === "drag-input-connector"){
 				editor.addNodeInput(node_id);
@@ -539,7 +539,7 @@ function hide_or_show(element) {
 	  }
       
       function addNodeToDrawFlow(name, pos_x, pos_y) {
-     // console.log(name.className);
+      console.log(name.className);
 	      if(editor.editor_mode === 'fixed') {
 	        return false;
 	      }
@@ -549,7 +549,7 @@ function hide_or_show(element) {
 		fpath = Flask.url_for("static", {"filename":"themes/{{stf.theme.data}}/"+String(name)});
 		// In simplest configuration, just draw image onto the canvas
 		// There are probably better ways to do this but alas I am no computer scientist
-		var pe_html = String(`<img draggable="false" src="` + fpath + `"></img><label>`);
+		var pe_html = String(`<img draggable="false" src='` + fpath + `'></img>`);
 
 		// name, inputs, outputs, pos_x, pos_y, class name, data, html or name of registered node, typenode
 
