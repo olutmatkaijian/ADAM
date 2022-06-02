@@ -20,14 +20,114 @@
 	</div>
 
 	<!-- This seems simpler and better than a table -->
-	<div class="row" id="inspector_rows">
-		<div class="column" id="inspector_column1">
-			Column 1
+	<!-- originally I intended to load this dynamically
+	but that did not work out as planned.... -->
+
+
+	<!-- Accoding to drawflow dev, it should be possible to synchronize nodes using df-* attributes:
+	
+		
+		You can use the attribute df-* in inputs, textarea or select to synchronize with the node data and contenteditable.	
+		<div class="column" id="inspector_column">
+
+	However, this only seems to apply to input boxes directly in the node, meaning this function is useless here -->
+
+		<!-- ID -->
+			<div class="row">
+				<div class="column" id="node_selected_id_key">
+					<label for="node_selected_id_input">id: </label>
+				</div>
+				<div class="column" id="node_selected_id_value">
+						<input type="number" id="node_selected_id_input" min="0" disabled="true"></input>
+				</div>	
+			</div>
+		<!-- Name -->
+			<div class="row">
+				<div class="column" id="node_selected_name_key">
+					<label for="node_selected_name_input">name: </input>
+				</div>
+				<div class="column" id="node_selected_name_value">
+					<input type="text" id="node_selected_name_input"></input>
+				</div>
+			</div>
+		<!-- Data -->
+			<div class="row">
+				<div class="column" id="node_selected_data_key">
+					<label for="node_selected_data_input">data: </input>
+				</div>
+				<div class="column" id="node_selected_data_value">
+					<textarea id="node_selected_data_textarea"></textarea>
+				</div>
+			</div>
+		<!-- Class -->
+			<div class="row">
+				<div class="column" id="node_selected_class_key">
+					<label for="node_selected_class_input">class: </input>
+				</div>
+				<div class="column" id="node_selected_class_value">
+					<input type="text" id="node_selected_class_input"></input>
+				</div>
+			</div>
+		<!-- html -->
+			<div class="row">
+				<div class="column" id="node_selected_html_key">
+					<label for="node_selected_html_textarea">html: </label>
+				</div>
+				<div class="column" id="node_selected_html_value">
+					<textarea id="node_selected_html_textarea" rows="4"></textarea>
+				</div>
+			</div>
+		<!-- typenode -->
+			<div class="row">
+				<div class="column" id="node_selected_typenode_key">
+					<label for="node_selected_typenode_key">typenode: </html>
+				</div>
+				<div class="column" id="node_selected_typenode_value">
+					<select id="node_selected_typenode_select">
+						<option value="true">True</option>
+						<option value="false">False</option>
+						<option value="vue">vue</option>
+					</select>
+				</div>
+			</div>			
+		<!-- Inputs -->
+			<div class="row">
+				<div class="column" id="node_selected_inputs_key">
+					<label for="node_selected_inputs_value">inputs: </label>
+				</div>
+				<div class="column" id="node_selected_inputs_value">
+					<textarea type="number" id="node_selected_inputs_textarea" disabled="true"></textarea>
+				</div>
+			</div>
+		<!-- outputs -->
+			<div class="row">
+				<div class="column" id="node_selected_outputs_key">
+					<label for="node_selected_outputs_value">outputs: </label>
+				</div>
+				<div class="column" id="node_selected_outputs_value">
+					<textarea id="node_selected_outputs_textarea" disabled="true"></textarea>
+				</div>
+			</div>
+		<!-- pos_x -->
+			<div class="row">
+				<div class="column" id="node_selected_pos_x_key">
+					<label for="node_selected_pos_x_value">x-pos: </label>
+				</div>
+				<div class="column" id="node_selected_pos_x_value">
+					<input type="number" id="node_selected_pos_x_input" disabled="true"</input>
+				</div>
+			</div>
+		<!-- pos_y -->
+			<div class="row">
+				<div class="column" id="node_selected_pos_y_key">
+					<label for="node_selected_pos_y_value">y-pos: </label>
+				</div>
+				<div class="column" id="node_selected_pos_y_value">
+					<input type="number" id="node_selected_pos_y_input" disabled="true"></input>
+				</div>
+			</div>
+		<div class="row"><button id="update_selected_node" onclick="update_node(document.getElementById('node_selected_id_input').value)">Updated Node</button></div>
 		</div>
-		<div class="column" id="inspector_column2">
-			Column 2
-		</div>
-	</div>
  </div>
 
 
@@ -81,13 +181,12 @@
         
         <div class="Help" id="cheat" style="display:none">Cheatsheet:
             <ul>
-                <li>Press Delete to remove node</li>
-                <li>Pull from left column to editor to create node</li>
-                <li>Clear removes everything</li>
-                <li>Export exports to JSON</li>
-                <li>Inputs are left</li>
-                <li>Outputs are right</li>
-                <li>Double-click to add new routing point (buggy)</li>
+                <li>Delete removes a node</li>
+                <li>Arrow with box -> New input node (left)</li>
+                <li>Arrow without box -> New output node (right)<li>
+                <li>Drag elements onto canvas for new node </li>
+                <li>Drag HTML elements onto node for new node HTML </li>
+                
             </ul>
         </div>
         <div class="bar-zoom">
@@ -124,6 +223,7 @@ function dragElement(elmnt) {
     document.onmousemove = elementDrag;
   }
 
+
   function elementDrag(e) {
     e = e || window.event;
     e.preventDefault();
@@ -143,6 +243,94 @@ function dragElement(elmnt) {
     document.onmousemove = null;
   }
 }
+
+
+
+// This function lists all parameters associated with an object
+function listInspectorObjects(obj)
+  {
+
+  	// First clear any possibly remaining elements from the appropriate object inspector divs
+
+  	
+	entries_array = Object.entries(obj);
+	//console.log("Array: " + entries_array);
+	//Array: id,1,name,,data,[object Object],class,pnode,html,<img draggable="false" src="/static/themes/craftbeerpi-ui-widgets/120L_ZKG.svg"></img>,typenode,false,inputs,[object Object],outputs,[object Object],pos_x,136.71665954589844,pos_y,343
+
+	//console.log(entries_array[0] + ":" + entries_array[0][1]);
+	document.getElementById("node_selected_id_input").value = entries_array[0][1];
+
+	// Name
+	//console.log(entries_array[1] + ":" + entries_array[1][1]);
+	document.getElementById("node_selected_name_input").value = entries_array[1][1];
+
+	// Data
+	// TODO: Unpack object here
+	//console.log(entries_array[2] + ":" + entries_array[2][1]);
+	document.getElementById("node_selected_data_textarea").value = JSON.stringify(entries_array[2][1]);
+
+	// Class
+	//console.log(entries_array[3] + ":" + entries_array[3][1]);
+	document.getElementById("node_selected_class_input").value = entries_array[3][1];
+
+	// HTML
+	//console.log(entries_array[4] + " : " + entries_array[4][1]);
+	document.getElementById("node_selected_html_textarea").value = entries_array[4][1];
+
+	// typenode
+	//console.log(entries_array[5] + " : " + entries_array[5][1]);
+	document.getElementById("node_selected_typenode_select").value = entries_array[5][1];
+
+
+	//console.log(entries_array[6] + " : " + entries_array[6][1]);
+	document.getElementById("node_selected_inputs_textarea").value = JSON.stringify(entries_array[6][1]);
+
+	//console.log(entries_array[7] + " : " + entries_array[7][1]);
+	document.getElementById("node_selected_outputs_textarea").value = JSON.stringify(entries_array[7][1]);
+	
+
+	// Pos X and Y
+	//console.log(entries_array[8] + " : " + entries_array[8][1]);
+	document.getElementById("node_selected_pos_x_input").value = entries_array[8][1];
+
+	//console.log(entries_array[9] + " : " + entries_array[9][1]);
+	document.getElementById("node_selected_pos_y_input").value = entries_array[9][1];
+  }
+
+
+
+
+// While the Object editor should have originally been able to change any value of a node
+// I have come to the conclusion that this is unnecessary. 
+
+// Reason: Drawflow already takes care of input and output nodes
+// therefor, they must not be changed by the user. 
+// Reason #2: Allowing raw input from the user would cause security concerns
+function update_node(id)
+{	console.log("Updating Node: " + id);
+	node =	editor.getNodeFromId(id);
+
+
+	// Get the values
+	updated_name = document.getElementById("node_selected_name_input").value;
+	updated_data = document.getElementById("node_selected_data_textarea").value;
+	updated_class = document.getElementById("node_selected_class_input").value;
+	updated_html = document.getElementById("node_selected_html_textarea").value;
+	updated_typenode = document.getElementById("node_selected_typenode_select").value;
+	
+
+
+	// This may look like a very weird way to do this, and it is, but it works
+	editor.drawflow.drawflow.Home.data[id].name = updated_name;
+	editor.updateNodeDataFromId(id, JSON.parse(updated_data));
+	editor.drawflow.drawflow.Home.data[id].class = updated_class;
+	editor.drawflow.drawflow.Home.data[id].html = updated_html;
+	editor.drawflow.drawflow.Home.data[id].typenode = updated_typenode; //TODO: Add vue option to typenode
+	//updateNodeDataFromIdNoDf(id, node);
+	console.log("Updated node: " + node);
+	
+}
+
 
 function hide_or_show(element) {
   var x = document.getElementById(element);
@@ -175,13 +363,7 @@ function hide_or_show(element) {
     })
 
     editor.on('nodeSelected', function(id) {
-    // When this method is called it should load all
-    // relevant data into the object inspector
-    // if the inspector is visible
-
-    // if it is not visible, it should skip the loading step
-    // however, when it does become visible
-    // the data should be loaded anyways
+	  listInspectorObjects(editor.getNodeFromId(id));
       console.log("Node selected " + id);
     })
 
@@ -264,8 +446,8 @@ function hide_or_show(element) {
 
       // This is important for the function to drop elements onto the nodes later on
 	  source_element = ev.target.className;
-	  ev.dataTransfer.setData("element-type", source_element);
-
+	  console.log("Class name: " + source_element);
+	
       }
     }
     function changeMode(option) {
@@ -314,11 +496,11 @@ function hide_or_show(element) {
 		  var add_element_x = event.clientX; 
 		  var add_element_y = event.clientY;
 			add_conn_element = document.elementFromPoint(add_element_x, add_element_y);
-			console.log(add_conn_element);
+		//	console.log(add_conn_element);
 
 	// If we drop onto the image, it will select the div of the image
 	// this means we need to get the parent node of the image for it to work IF THE ID = ""
-		console.log(add_conn_element.className);
+	//	console.log(add_conn_element.className);
 
 		// Since it will give ANY div that we drop onto, we must make sure we are dropping into a legit node
 		if(add_conn_element.className === "drawflow_content_node")
@@ -332,8 +514,8 @@ function hide_or_show(element) {
 			
 	  		// Get the class of dragged element
 			element_type = ev.dataTransfer.getData("element-type");
-			console.log("Class name source: " + element_type);
-			console.log('add_con_element id: ' + add_conn_element.id);
+		//	console.log("Class name source: " + element_type);
+		//	console.log('add_con_element id: ' + add_conn_element.id);
 			add_io_ondrop(element_type, add_conn_element.id);
 		}
 		
@@ -346,7 +528,7 @@ function hide_or_show(element) {
 	  	// Suspect: Inconsistency in Drawflow of use of "node-x" v "x" as ID
 	  	
 		node_id = node_id.substring(node_id.indexOf("-") + 1);
-		console.log(node_id);
+	//	console.log(node_id);
 
 	  	if(element_type === "drag-input-connector"){
 				editor.addNodeInput(node_id);
@@ -357,7 +539,7 @@ function hide_or_show(element) {
 	  }
       
       function addNodeToDrawFlow(name, pos_x, pos_y) {
-      console.log(name.className);
+     // console.log(name.className);
 	      if(editor.editor_mode === 'fixed') {
 	        return false;
 	      }
@@ -367,7 +549,7 @@ function hide_or_show(element) {
 		fpath = Flask.url_for("static", {"filename":"themes/{{stf.theme.data}}/"+String(name)});
 		// In simplest configuration, just draw image onto the canvas
 		// There are probably better ways to do this but alas I am no computer scientist
-		var pe_html = String(`<img draggable="false" src='` + fpath + `'></img>`);
+		var pe_html = String(`<img draggable="false" src="` + fpath + `"></img><label>`);
 
 		// name, inputs, outputs, pos_x, pos_y, class name, data, html or name of registered node, typenode
 

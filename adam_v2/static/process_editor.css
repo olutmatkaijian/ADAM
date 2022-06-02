@@ -31,9 +31,8 @@
 	border: 1px solid orange;
 	text-align: center;
 	width: 400px;
-	height: 400px;
-	right: 20px;
 	top: 11%;
+	resize: false;
 }
 
 #inspectorheader {
@@ -42,6 +41,7 @@
 	z-index: 10;
 	background-color: #282828;
 	color: darkorange;
+	resize: false; 
 }
 
 .column {
