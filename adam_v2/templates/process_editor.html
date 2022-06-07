@@ -143,7 +143,7 @@
 
 
         <div class="item_grid">
-			{% for item in flist %}
+			{% for item in process_editor_flist %}
 					<div class="drag-drawflow" draggable="true" ondragstart="drag(event)" data-node="{{item}}">
 						<img draggable="false" src="/static/themes/{{theme}}/{{item}}"></img>
 						<i class="{{item.strip('.svg')}}"></i>
@@ -152,20 +152,19 @@
         </div>
 
 	   <div class="item_grid">
-
 				<div class="drag-input-connector" draggable="true" ondragstart="drag(event)">
-					<img draggable="false" src="/static/Input_Connector_Menu_Icon.svg"></img>
-				</div>
+									<img draggable="false" src="/static/HTML_Elements/Input_Connector_Menu_Icon.svg"></img>
+								</div>
+								
 				<div class="drag-output-connector" draggable="true" ondragstart="drag(event)">
-					<img draggable="false" src="/static/Output_Connector_Menu_Icon.svg"></img>
+									<img draggable="false" src="/static/HTML_Elements/Output_Connector_Menu_Icon.svg"></img>
 				</div>
-				<div class="html-drag-and-drop" draggable="true">
-					<img draggable="false" src="/static/HTML_Button.svg"></img>
+				
+				{% for item in html_flist %}
+				<div class="html-{{item.strip('.svg')}}" draggable="true">
+					<img draggable="false" src="/static/HTML_Elements/{{item}}"></img>
 				</div>
-
-				<div class="html-drag-and-drop" draggable="true">
-					<img draggable="flase" src="/static/HTML_Button.svg"</img>
-				</div>
+				{% endfor %}
        </div>
       
     </div>

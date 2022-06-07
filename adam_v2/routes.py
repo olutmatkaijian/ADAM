@@ -74,19 +74,28 @@ def process_editor():
         # We need to get all the theme directories, but only the first sub-directory
         main_dir = os.getcwd()
         theme_dir = main_dir + '/adam_v2/static/themes'
+        html_dir = main_dir + '/adam_v2/static/HTML_Elements'
+        html_flist = []
         list_subfolders = [f.name for f in os.scandir(theme_dir) if f.is_dir()]
 
         stf.theme.choices = list_subfolders
+
+        for file in os.listdir(html_dir):
+            if file.endswith('svg'):
+                html_flist.append(file)
+        
         
         if request.method == "POST":
-            flist = []
+            process_editor_flist = []
             print(stf.theme.data)
 
             for file in os.listdir(theme_dir+"/"+str(stf.theme.data)):
                 if file.endswith('svg'):
-                    flist.append(file)
+                    process_editor_flist.append(file)
 
-            return render_template("process_editor.html", title="Process Editor (" + str(stf.theme.data) + ")", flist = flist, theme=stf.theme.data, stf = stf)
+            
+
+            return render_template("process_editor.html", title="Process Editor (" + str(stf.theme.data) + ")", process_editor_flist = process_editor_flist, html_flist = html_flist, theme=stf.theme.data, stf = stf)
             print(flist)
         
 #TODO:
