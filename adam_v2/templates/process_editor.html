@@ -161,6 +161,9 @@
 				</div>
 				
 				{% for item in html_flist %}
+				<script>
+				console.log("Add Element to HTML DnD: html-{{item.strip('.svg')}}");
+				</script>
 				<div class="html-{{item.strip('.svg')}}" draggable="true">
 					<img draggable="false" src="/static/HTML_Elements/{{item}}"></img>
 				</div>
@@ -203,6 +206,7 @@
   </div>
 
 
+<!-- This Script exists soley to drag the object insepctor window around -->
 <script>
 	dragElement(document.getElementById("inspector"));
 
