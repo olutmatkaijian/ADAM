@@ -14,7 +14,7 @@ A somewhat recent picture of the UI
 
 02/06/22: The object inspector now works almost as intended. Names, classes, html and data of nodes can now be changed, but it still is slightly buggy. Disabled boxes are managed by drawflow, and cannot be changed by the user. 
 
-07/06/22: Now added icons for adding HTML elements, but the function to inject code dynamically into the node so that it displays when dropped is not written yet. TODO: Fix the HTML Element stuff, then add SVG animation (with reversible direction!) instead of current connections between nodes. Rewrite routing part of code so that instead of "Click on node -> Pull to other node" it becomes "Click on node -> Click on background -> Click onto other node", so that bends in piping etc can be represented. 
+07/06/22: Now added icons for adding HTML elements, but the function to inject code dynamically into the node so that it displays when dropped is not written yet. TODO: Fix the HTML Element stuff, then add SVG animation (with reversible direction!) instead of current connections between nodes. Rewrite routing part of code so that instead of "Click on node -> Pull to other node" it becomes "Click on node -> Click on background -> Click onto other node", so that bends in piping etc can be represented. Also fix: When theme is changed, the complete canvas is rewritten, causing loss of progress. Instead, only redraw the theme elements.
 
 # Introduction
 The goal of ADAM is to allow users of various skill levels to create process interfaces using a drag and drop interface, while also allowing users to design / "program" the process in a drag-and-drop manner. These processes can then be supervised in real time using the process viewer.
