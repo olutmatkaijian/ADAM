@@ -257,8 +257,8 @@ start dragging the image. When the image has been dragged, it would create a new
 .drag-drawflow {
   cursor: move;
   user-select: none;
-  width:  60px; 
-  height: 60px; 
+  width:  64px; 
+  height: 64px; 
 }
 
 .btn-export {

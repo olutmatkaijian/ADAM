@@ -11,12 +11,13 @@
 	grid-column-gap: 0; 
 	height: 50vh; 
 	overflow-y: scroll; 
-	margin-bottom: 10px; 
+	padding-top: 12px;
+	padding-bottom: 12px;
 }
 
 .item_grid img {
-	width: 60px;
-	height: 60px;
+	width: 64px;
+	height: 64px;
 }
 
 .pe_selector {
@@ -24,6 +25,15 @@
 	padding-bottom: 10px;
 }
 
+.pe_modify_element {
+	overflow-y: scroll;
+	display: table-cell;
+}
+
+.pe_modify_element img {
+	width: 64px;
+	height: 64px;
+}
 #inspector {
 	position: absolute;
 	z-index: 9;

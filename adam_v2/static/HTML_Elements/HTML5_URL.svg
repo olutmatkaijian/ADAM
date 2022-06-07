@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="HTML5_URL.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="px"
+     showgrid="true"
+     inkscape:zoom="60.280853"
+     inkscape:cx="18.670937"
+     inkscape:cy="12.906254"
+     inkscape:window-width="1920"
+     inkscape:window-height="1010"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid9" />
+  </sodipodi:namedview>
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:none;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 5,9 v 8 H 26 V 9 Z"
+       id="path4704" />
+    <path
+       style="fill:#d45500;stroke:#d45500;stroke-width:0.033178"
+       d="M 4.5122122,13.005788 V 8.5267539 H 15.49414 26.476069 v 4.4790341 4.479034 H 15.49414 4.5122122 Z m 21.0016938,0 V 9.4889168 H 15.49414 5.4743751 v 3.5168712 3.516871 H 15.49414 25.513906 Z"
+       id="path5014" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:7.10771px;line-height:1.25;font-family:sans-serif;fill:#d45500;fill-opacity:1;stroke:none;stroke-width:0.177692"
+       x="13.168522"
+       y="14.463407"
+       id="text33844"
+       transform="scale(0.92876314,1.0767008)"><tspan
+         sodipodi:role="line"
+         id="tspan33842"
+         x="13.168522"
+         y="14.463407"
+         style="stroke-width:0.177692;fill:#d45500">URL</tspan></text>
+    <path
+       style="fill:none;stroke:#aa4400;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 7,13 v -2 h 3 v 3 H 7 Z"
+       id="path34894" />
+    <path
+       style="fill:none;stroke:#d45500;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 9,13 v 2 h 3 v -2 z"
+       id="path34898" />
+  </g>
+</svg>
