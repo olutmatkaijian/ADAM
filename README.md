@@ -6,6 +6,8 @@
 A somewhat recent picture of the UI
 
 # Recent Changes
+25/11/22: Due to some recent controversy (*cough* CoPilot *cough*) and since I'm the only one developing this, I am setting up this repsoitory on my personal Gitea instance for further development. Major changes will be uploaded to GitHub once the time is right.
+
 27/05/22: Further implementation of the Process Editor. It is now possible to load any SVG into the process editor by adding a folder in the "themes" directory. Select the correct theme using the "change theme" button on the top right. 
 
 29/05/22: Bug fixed in Process Editor. Dynamic adding of Input/Output to node elements. Removing them is not possible at the moment as this will delete the node. 
